@@ -1,0 +1,2264 @@
+/* =========================================================
+   SCENE 05 — HOSHI'S LAIR
+========================================================= */
+
+
+/* =========================================================
+   BASE
+========================================================= */
+
+.lair-scene {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background:
+        #100923;
+}
+
+
+/* =========================================================
+   TRAIL TO LAIR
+========================================================= */
+
+.lair-trail-layer {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 20;
+
+    opacity: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.55s ease,
+        transform 0.65s ease;
+}
+
+
+.lair-trail-layer.show {
+    opacity: 1;
+}
+
+
+.lair-trail-layer.leave {
+    opacity: 0;
+
+    transform:
+        scale(1.04);
+}
+
+
+.lair-trail-bg {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   TRAIL PROPS
+========================================================= */
+
+.lair-trail-prop {
+    position: absolute;
+
+    z-index: 24;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 6px 8px
+            rgba(0, 0, 0, 0.45)
+        );
+
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+
+/* Бантик */
+
+.lair-trail-ribbon {
+    left: 22%;
+    top: 61%;
+
+    width:
+        clamp(
+            55px,
+            6vw,
+            105px
+        );
+
+    transform:
+        rotate(-14deg);
+}
+
+
+/* Ложка */
+
+.lair-trail-spoon {
+    left: 39%;
+    top: 68%;
+
+    width:
+        clamp(
+            70px,
+            7vw,
+            125px
+        );
+
+    transform:
+        rotate(28deg);
+}
+
+
+/* Носок */
+
+.lair-trail-sock {
+    left: 58%;
+    top: 64%;
+
+    width:
+        clamp(
+            70px,
+            7vw,
+            130px
+        );
+
+    transform:
+        rotate(-18deg);
+}
+
+
+/* Заколка */
+
+.lair-trail-hairclip {
+    left: 74%;
+    top: 56%;
+
+    width:
+        clamp(
+            48px,
+            5vw,
+            90px
+        );
+
+    transform:
+        rotate(19deg);
+}
+
+
+/* =========================================================
+   TRAIL PROP HIGHLIGHT
+========================================================= */
+
+.lair-trail-prop.highlight {
+    filter:
+        brightness(1.15)
+
+        drop-shadow(
+            0 0 8px
+            rgba(255, 242, 159, 1)
+        )
+
+        drop-shadow(
+            0 0 18px
+            rgba(203, 103, 255, 0.9)
+        );
+
+    animation:
+        lairTrailHighlight
+        0.75s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes lairTrailHighlight {
+
+    from {
+        scale: 1;
+    }
+
+    to {
+        scale: 1.1;
+    }
+
+}
+
+
+/* =========================================================
+   MAIN LAIR
+========================================================= */
+
+.lair-main-layer {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 15;
+
+    opacity: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.55s ease;
+}
+
+
+.lair-main-layer.show {
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+.lair-main-bg {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   JUNK PILE
+========================================================= */
+
+.lair-junk-pile {
+    position: absolute;
+
+    left: 50%;
+    bottom: -2%;
+
+    width:
+        clamp(
+            520px,
+            66vw,
+            1120px
+        );
+
+    max-height: 68vh;
+
+    object-fit: contain;
+
+    transform:
+        translateX(-50%)
+        translateY(8%);
+
+    z-index: 10;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 12px 18px
+            rgba(0, 0, 0, 0.45)
+        );
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.7s ease;
+}
+
+
+.lair-junk-pile.show {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+/* Брям-бдынь 😂 */
+
+.lair-junk-pile.clatter {
+    animation:
+        lairJunkClatter
+        0.55s
+        ease-out;
+}
+
+
+@keyframes lairJunkClatter {
+
+    0% {
+        transform:
+            translateX(-50%)
+            rotate(0deg);
+    }
+
+    15% {
+        transform:
+            translateX(-51%)
+            rotate(-1deg);
+    }
+
+    30% {
+        transform:
+            translateX(-49%)
+            rotate(1.3deg);
+    }
+
+    45% {
+        transform:
+            translateX(-51%)
+            rotate(-1deg);
+    }
+
+    65% {
+        transform:
+            translateX(-49.5%)
+            rotate(0.7deg);
+    }
+
+    100% {
+        transform:
+            translateX(-50%)
+            rotate(0deg);
+    }
+
+}
+
+
+/* После сортировки куча чуть раскрывается */
+
+.lair-junk-pile.cleared {
+    opacity: 0.6;
+
+    transform:
+        translateX(-50%)
+        translateY(10%)
+        scale(0.94);
+
+    transition:
+        opacity 0.65s ease,
+        transform 0.65s ease;
+}
+
+
+/* =========================================================
+   HOSHI
+========================================================= */
+
+.lair-hoshi {
+    position: absolute;
+
+    left: 50%;
+    top: 48%;
+
+    width:
+        clamp(
+            150px,
+            16vw,
+            285px
+        );
+
+    max-height: 55vh;
+
+    object-fit: contain;
+
+    z-index: 38;
+
+    opacity: 0;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 9px 12px
+            rgba(0, 0, 0, 0.5)
+        );
+
+    transition:
+        left 0.45s ease,
+        top 0.45s ease,
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+
+.lair-hoshi.show {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   HOSHI — NOTICED THEM
+========================================================= */
+
+.lair-hoshi.noticed {
+    animation:
+        lairHoshiNoticed
+        0.5s
+        ease-out;
+}
+
+
+@keyframes lairHoshiNoticed {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+    45% {
+        transform:
+            translate(
+                -50%,
+                -64%
+            )
+            scale(1.12)
+            rotate(-6deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI — HIDES BOW / SPOON
+========================================================= */
+
+.lair-hoshi.hide-treasures {
+    animation:
+        lairHideTreasures
+        0.5s
+        ease-in-out;
+}
+
+
+@keyframes lairHideTreasures {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    35% {
+        transform:
+            translate(
+                -50%,
+                -48%
+            )
+            rotate(-5deg);
+    }
+
+    70% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(4deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI — TRIES TO RUN
+========================================================= */
+
+.lair-hoshi.try-run {
+    left: 58%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(5deg);
+}
+
+
+.lair-hoshi.trip {
+    animation:
+        lairHoshiTrip
+        0.55s
+        ease-out;
+}
+
+
+@keyframes lairHoshiTrip {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(5deg);
+    }
+
+    35% {
+        transform:
+            translate(
+                -47%,
+                -44%
+            )
+            rotate(15deg);
+    }
+
+    65% {
+        transform:
+            translate(
+                -53%,
+                -52%
+            )
+            rotate(-11deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(0deg);
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI SEARCHES FOR LOST STAR
+========================================================= */
+
+.lair-hoshi.searching-star {
+    animation:
+        lairHoshiSearching
+        0.8s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes lairHoshiSearching {
+
+    from {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(-3deg);
+    }
+
+    to {
+        transform:
+            translate(
+                -50%,
+                -47%
+            )
+            rotate(3deg);
+    }
+
+}
+
+
+/* =========================================================
+   STORY STARS
+========================================================= */
+
+.lair-story-stars {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 31;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.4s ease;
+}
+
+
+.lair-story-stars.show {
+    opacity: 1;
+}
+
+
+.lair-story-star {
+    position: absolute;
+
+    width:
+        clamp(
+            50px,
+            5vw,
+            88px
+        );
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(255, 240, 121, 0.95)
+        )
+
+        drop-shadow(
+            0 0 18px
+            rgba(255, 189, 72, 0.6)
+        );
+}
+
+
+.lair-story-star-1 {
+    left: 42%;
+    top: 42%;
+
+    transform:
+        rotate(-10deg);
+}
+
+
+.lair-story-star-2 {
+    left: 47%;
+    top: 34%;
+
+    transform:
+        rotate(7deg);
+}
+
+
+.lair-story-star-3 {
+    left: 54%;
+    top: 38%;
+
+    transform:
+        rotate(-5deg);
+}
+
+
+.lair-story-star-4 {
+    left: 59%;
+    top: 45%;
+
+    transform:
+        rotate(12deg);
+}
+
+
+/* =========================================================
+   FALLING STAR
+========================================================= */
+
+.lair-story-star-4.fall {
+    animation:
+        lairStoryStarFall
+        0.75s
+        ease-in
+        forwards;
+}
+
+
+@keyframes lairStoryStarFall {
+
+    0% {
+        left: 59%;
+        top: 45%;
+
+        opacity: 1;
+
+        transform:
+            rotate(12deg)
+            scale(1);
+    }
+
+    55% {
+        left: 55%;
+        top: 61%;
+
+        opacity: 1;
+
+        transform:
+            rotate(110deg)
+            scale(0.85);
+    }
+
+    100% {
+        left: 52%;
+        top: 72%;
+
+        opacity: 0.45;
+
+        transform:
+            rotate(205deg)
+            scale(0.55);
+    }
+
+}
+
+
+.lair-story-star-4.lost {
+    opacity: 0;
+}
+
+
+/* После падения четвёртой остаются 3 */
+
+.lair-story-stars.three-left
+.lair-story-star-4 {
+    display: none;
+}
+
+
+.lair-story-stars.hide-for-game {
+    opacity: 0;
+
+    transition:
+        opacity 0.35s ease;
+}
+
+
+/* =========================================================
+   ITEMS LAYER
+========================================================= */
+
+.lair-items-layer {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 50;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.35s ease;
+}
+
+
+.lair-items-layer.show {
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   SORT ITEM
+========================================================= */
+
+.lair-sort-item {
+    position: absolute;
+
+    min-width: 58px;
+    min-height: 58px;
+
+    padding: 0;
+
+    margin: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.6);
+
+    opacity: 0;
+
+    cursor: pointer;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.28s ease,
+        transform 0.28s ease,
+        filter 0.2s ease;
+
+    touch-action: none;
+}
+
+
+.lair-sort-item.show {
+    opacity: 1;
+
+    pointer-events: auto;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+}
+
+
+.lair-sort-item > img {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 5px 6px
+            rgba(0, 0, 0, 0.45)
+        );
+}
+
+
+/* =========================================================
+   ITEM GLOW
+========================================================= */
+
+.lair-item-glow {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 135%;
+    aspect-ratio: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    border-radius: 50%;
+
+    z-index: 1;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 243, 164, 0.32) 0%,
+            rgba(190, 103, 255, 0.2) 42%,
+            rgba(190, 103, 255, 0) 72%
+        );
+
+    transition:
+        opacity 0.2s ease;
+}
+
+
+.lair-sort-item:hover
+.lair-item-glow {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   SELECTED ITEM
+========================================================= */
+
+.lair-sort-item.selected {
+    opacity: 1;
+
+    pointer-events: none;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1.14);
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(255, 255, 255, 0.95)
+        )
+
+        drop-shadow(
+            0 0 18px
+            rgba(255, 220, 86, 0.8)
+        )
+
+        drop-shadow(
+            0 0 28px
+            rgba(184, 91, 255, 0.7)
+        );
+}
+
+
+.lair-sort-item.selected
+.lair-item-glow {
+    opacity: 1;
+
+    animation:
+        lairSelectedGlow
+        0.8s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes lairSelectedGlow {
+
+    from {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.9);
+    }
+
+    to {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1.14);
+    }
+
+}
+
+
+/* =========================================================
+   WRONG ITEM
+========================================================= */
+
+.lair-sort-item.wrong {
+    animation:
+        lairItemWrong
+        0.3s
+        ease-out;
+}
+
+
+@keyframes lairItemWrong {
+
+    0% {
+        translate: 0 0;
+    }
+
+    20% {
+        translate: -9px 0;
+    }
+
+    40% {
+        translate: 9px 0;
+    }
+
+    60% {
+        translate: -6px 0;
+    }
+
+    80% {
+        translate: 6px 0;
+    }
+
+    100% {
+        translate: 0 0;
+    }
+
+}
+
+
+/* =========================================================
+   CORRECT ITEM
+========================================================= */
+
+.lair-sort-item.correct {
+    filter:
+        drop-shadow(
+            0 0 12px
+            rgba(255, 240, 129, 1)
+        );
+}
+
+
+.lair-sort-item.sorted {
+    pointer-events: none;
+}
+
+/* =========================================================
+   ПАНЕЛЬ-ПОДСКАЗКА (СПИСОК ПРЕДМЕТОВ)
+========================================================= */
+
+.lair-checklist {
+    position: fixed;
+    left: 2%;
+    top: 62%;
+    transform: translateY(-50%);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;               /* уменьшили с 12px */
+    padding: 10px 8px;      /* уменьшили с 16px 12px */
+    background: rgba(10, 5, 25, 0.8);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255, 215, 100, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.lair-checklist.show {
+    opacity: 1;
+}
+
+.lair-checklist-item {
+    width: clamp(30px, 3.5vw, 50px);   /* было 40px – 5vw – 70px */
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.lair-checklist-item img {
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+
+    pointer-events: none;
+}
+
+/* Предмет найден – скрываем */
+.lair-checklist-item.found {
+    opacity: 0;
+    transform: scale(0.4);
+    pointer-events: none;
+}
+
+/* Адаптив для маленьких экранов */
+@media (max-width: 950px) {
+    .lair-checklist {
+        left: 1%;
+        gap: 8px;
+        padding: 10px 8px;
+    }
+
+    .lair-checklist-item {
+        width: clamp(30px, 6vw, 50px);
+    }
+}
+
+/* =========================================================
+   BASKETS
+========================================================= */
+
+.lair-baskets {
+    position: absolute;
+
+    left: 50%;
+    bottom: -5%;
+
+    width: 94%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:
+        clamp(
+            35px,
+            7vw,
+            130px
+        );
+
+    align-items: end;
+
+    transform:
+        translateX(-50%)
+        translateY(25px);
+
+    z-index: 64;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.4s ease;
+}
+
+
+.lair-baskets.show {
+    opacity: 1;
+
+    pointer-events: auto;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+/* =========================================================
+   INDIVIDUAL BASKET
+========================================================= */
+
+.lair-basket {
+    position: relative;
+
+    justify-self: center;
+
+    width:
+        clamp(
+            160px,
+            19vw,
+            330px
+        );
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
+}
+
+
+.lair-basket img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 8px 12px
+            rgba(0, 0, 0, 0.42)
+        );
+}
+
+
+.lair-basket:hover {
+    transform:
+        scale(1.045);
+
+    filter:
+        brightness(1.08);
+}
+
+
+/* =========================================================
+   BASKET RECEIVES ITEM
+========================================================= */
+
+.lair-basket.receive {
+    animation:
+        lairBasketReceive
+        0.45s
+        ease-out;
+}
+
+
+@keyframes lairBasketReceive {
+
+    0% {
+        transform:
+            scale(1);
+    }
+
+    45% {
+        transform:
+            scale(1.12);
+    }
+
+    70% {
+        transform:
+            scale(0.96);
+    }
+
+    100% {
+        transform:
+            scale(1);
+    }
+
+}
+
+
+/* Кликнули на корзину без предмета */
+
+.lair-basket.hint {
+    animation:
+        lairBasketHint
+        0.3s
+        ease-out;
+}
+
+
+@keyframes lairBasketHint {
+
+    0% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-8px);
+    }
+
+    100% {
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI WATCHES SORTING
+========================================================= */
+
+.lair-hoshi.sorting-watch {
+    left: 82%;
+    top: 44%;
+
+    width:
+        clamp(
+            125px,
+            13vw,
+            220px
+        );
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(-2deg);
+
+    z-index: 60;
+}
+
+
+/* =========================================================
+   RIBBON GAG
+========================================================= */
+
+.lair-ribbon-gag-item {
+    position: absolute;
+
+    width:
+        clamp(
+            58px,
+            6vw,
+            105px
+        );
+
+    z-index: 100;
+
+    pointer-events: none;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(255, 143, 221, 0.75)
+        );
+
+    transition:
+        left 0.4s ease,
+        top 0.4s ease,
+        transform 0.4s ease,
+        opacity 0.35s ease;
+}
+
+
+/* Хоши в ужасе */
+
+.lair-hoshi.ribbon-shock {
+    animation:
+        lairRibbonShock
+        0.45s
+        ease-out;
+}
+
+
+@keyframes lairRibbonShock {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    45% {
+        transform:
+            translate(
+                -50%,
+                -67%
+            )
+            rotate(-8deg)
+            scale(1.1);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+/* Бежит спасать бантик */
+
+.lair-hoshi.ribbon-run {
+    left: 66%;
+
+    top: 65%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(8deg);
+}
+
+
+/* Бантик выхвачен */
+
+.lair-ribbon-gag-item.stolen {
+    left: 68% !important;
+    top: 53% !important;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(-12deg)
+        scale(1.1);
+}
+
+
+/* Защищает свою ценность 😂 */
+
+.lair-hoshi.ribbon-protect {
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(-3deg)
+        scale(1.05);
+}
+
+
+/* Нехотя отдаёт */
+
+.lair-hoshi.ribbon-give-back {
+    animation:
+        lairRibbonGiveBack
+        0.45s
+        ease-in-out;
+}
+
+
+@keyframes lairRibbonGiveBack {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    50% {
+        transform:
+            translate(
+                -55%,
+                -50%
+            )
+            rotate(-5deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+.lair-ribbon-gag-item.returned {
+    opacity: 0;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.35);
+}
+
+
+/* =========================================================
+   AFTER SORTING
+========================================================= */
+
+.lair-hoshi.sorting-happy {
+    animation:
+        lairSortingHappy
+        0.7s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes lairSortingHappy {
+
+    from {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            translateY(0);
+    }
+
+    to {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            translateY(-5px);
+    }
+
+}
+
+
+/* =========================================================
+   FOURTH STAR
+========================================================= */
+
+.lair-fourth-star {
+    position: absolute;
+
+    left: 50%;
+    top: 59%;
+
+    width:
+        clamp(
+            75px,
+            8vw,
+            135px
+        );
+
+    aspect-ratio: 1;
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    z-index: 95;
+
+    opacity: 0;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.25);
+
+    pointer-events: none;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.45s ease;
+}
+
+
+.lair-fourth-star img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(255, 248, 165, 1)
+        )
+
+        drop-shadow(
+            0 0 25px
+            rgba(255, 207, 64, 0.9)
+        )
+
+        drop-shadow(
+            0 0 42px
+            rgba(193, 93, 255, 0.6)
+        );
+}
+
+
+.lair-fourth-star.show {
+    opacity: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+}
+
+
+.lair-fourth-star.ready {
+    pointer-events: auto;
+
+    animation:
+        lairFourthStarReady
+        0.7s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes lairFourthStarReady {
+
+    from {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.94);
+    }
+
+    to {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1.12);
+    }
+
+}
+
+
+/* =========================================================
+   STAR COLLECTION
+========================================================= */
+
+.lair-fourth-star.collect {
+    pointer-events: none;
+
+    animation:
+        lairFourthStarCollect
+        0.55s
+        ease-in
+        forwards;
+}
+
+
+@keyframes lairFourthStarCollect {
+
+    0% {
+        left: 50%;
+        top: 59%;
+
+        opacity: 1;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+    55% {
+        opacity: 1;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1.22);
+    }
+
+    100% {
+        left: 88%;
+        top: 8%;
+
+        opacity: 0;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.22);
+    }
+
+}
+
+
+.lair-fourth-star.hidden {
+    display: none;
+}
+
+
+/* =========================================================
+   HOSHI SEES STAR
+========================================================= */
+
+.lair-hoshi.sees-star {
+    animation:
+        lairHoshiSeesStar
+        0.55s
+        ease-out;
+}
+
+
+@keyframes lairHoshiSeesStar {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    55% {
+        transform:
+            translate(
+                -50%,
+                -56%
+            )
+            scale(1.08)
+            rotate(-4deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+/* Промахнулся */
+
+.lair-hoshi.star-miss {
+    animation:
+        lairHoshiStarMiss
+        0.5s
+        ease-out;
+}
+
+
+@keyframes lairHoshiStarMiss {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    40% {
+        transform:
+            translate(
+                -42%,
+                -50%
+            )
+            rotate(8deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+/* Четыре у Эмы 😠 */
+
+.lair-hoshi.angry-four {
+    animation:
+        lairAngryFour
+        0.6s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes lairAngryFour {
+
+    from {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(-2deg);
+    }
+
+    to {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(2deg);
+    }
+
+}
+
+
+/* Гордится коллекцией */
+
+.lair-hoshi.proud {
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1.04);
+}
+
+
+/* =========================================================
+   ENDING SOCK
+========================================================= */
+
+.lair-ending-sock {
+    position: absolute;
+
+    right: 19%;
+    top: 42%;
+
+    width:
+        clamp(
+            70px,
+            7vw,
+            125px
+        );
+
+    z-index: 105;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform:
+        rotate(-15deg)
+        scale(0.5);
+
+    filter:
+        drop-shadow(
+            0 6px 8px
+            rgba(0, 0, 0, 0.45)
+        );
+
+    transition:
+        right 0.4s ease,
+        top 0.4s ease,
+        opacity 0.3s ease,
+        transform 0.4s ease;
+}
+
+
+.lair-ending-sock.show {
+    opacity: 1;
+
+    transform:
+        rotate(-15deg)
+        scale(1);
+}
+
+
+/* Хоши выхватывает */
+
+.lair-ending-sock.snatched {
+    right: 42%;
+    top: 50%;
+
+    transform:
+        rotate(20deg)
+        scale(0.8);
+
+    opacity: 0.95;
+}
+
+
+/* =========================================================
+   SOCK PANIC
+========================================================= */
+
+.lair-hoshi.sock-panic {
+    animation:
+        lairSockPanic
+        0.4s
+        ease-out;
+}
+
+
+@keyframes lairSockPanic {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    50% {
+        transform:
+            translate(
+                -43%,
+                -55%
+            )
+            rotate(7deg)
+            scale(1.06);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+/* Хранит драгоценный носок 😂 */
+
+.lair-hoshi.hugging-treasure {
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1.03);
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+.lair-hoshi.escape-ready {
+    left: 68%;
+
+    top: 47%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(5deg);
+}
+
+
+.lair-hoshi.escape {
+    left: 112%;
+
+    top: 42%;
+
+    opacity: 0;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(11deg)
+        scale(0.9);
+
+    transition:
+        left 0.85s linear,
+        top 0.85s ease,
+        opacity 0.55s ease,
+        transform 0.85s ease;
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.lair-topbar {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+
+    padding:
+        22px
+        28px;
+
+    z-index: 120;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.3s ease;
+}
+
+
+.lair-topbar.show {
+    opacity: 1;
+}
+
+
+.lair-subtitle {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    max-width: min(40.6vw, 546px);
+    min-height: 38px;
+    padding: 8px 13px;
+    border-radius: 18px;
+    background: rgba(21, 15, 47, 0.74);
+    border: 2px solid rgba(255, 225, 122, 0.72);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.26), 0 0 22px rgba(153,102,255,0.24);
+    color: #fff9df;
+    font-size: clamp(12.6px, 1.4vw, 21px);
+    font-weight: 800;
+    line-height: 1.18;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.55);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 70;
+    pointer-events: none;
+}
+
+/* Показываем, когда топбар активен */
+.lair-topbar.show .lair-subtitle {
+    opacity: 1;
+}
+
+
+.lair-star-hud-mount {
+    flex-shrink: 0;
+
+    display: flex;
+
+    justify-content: flex-end;
+}
+
+
+/* =========================================================
+   SPEAKERS
+========================================================= */
+
+.lair-speaker {
+    position: absolute;
+
+    bottom: -4%;
+
+    width:
+        clamp(
+            220px,
+            23vw,
+            410px
+        );
+
+    max-height: 82vh;
+
+    object-fit: contain;
+
+    z-index: 130;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        transform 0.28s ease,
+        opacity 0.22s ease;
+}
+
+
+.lair-speaker-left {
+    left: 0;
+
+    transform:
+        translateX(-105%);
+}
+
+
+.lair-speaker-right {
+    right: 0;
+
+    transform:
+        translateX(105%);
+}
+
+
+.lair-speaker-left.show {
+    opacity: 1;
+
+    transform:
+        translateX(-8%);
+}
+
+
+.lair-speaker-right.show {
+    opacity: 1;
+
+    transform:
+        translateX(8%);
+}
+
+
+.lair-speaker.character-speaking {
+    animation:
+        lairCharacterSpeaking
+        0.22s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes lairCharacterSpeaking {
+
+    0% {
+        translate: 0 0;
+    }
+
+    30% {
+        translate: 0 -1px;
+    }
+
+    60% {
+        translate: 0 0;
+    }
+
+    80% {
+        translate: 0 -0.5px;
+    }
+
+    100% {
+        translate: 0 0;
+    }
+
+}
+
+
+/* =========================================================
+   SMALLER SCREENS
+========================================================= */
+
+@media (
+    max-width: 950px
+) {
+
+    .lair-junk-pile {
+        width: 75vw;
+    }
+
+
+    .lair-hoshi {
+        width:
+            clamp(
+                130px,
+                17vw,
+                220px
+            );
+    }
+
+
+    .lair-baskets {
+        gap: 25px;
+    }
+
+
+    .lair-basket {
+        width:
+            clamp(
+                135px,
+                20vw,
+                230px
+            );
+    }
+
+
+    .lair-sort-item {
+        min-width: 50px;
+        min-height: 50px;
+    }
+
+
+    .lair-speaker {
+        width:
+            clamp(
+                180px,
+                25vw,
+                300px
+            );
+    }
+
+}
+/* =========================
+   УВЕЛИЧИВАЕМ РУМИ И ЗОИ В СЦЕНЕ LAIR
+========================= */
+
+.lair-speaker-rumi {
+    width: clamp(320px, 40vw, 640px) !important;
+}
+
+.lair-speaker-zoey {
+    width: clamp(260px, 28vw, 480px) !important;
+}
+
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}

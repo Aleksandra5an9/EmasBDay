@@ -1,0 +1,5114 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #060814;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at top, rgba(91, 68, 180, 0.35), transparent 40%),
+        radial-gradient(circle at bottom, rgba(255, 77, 181, 0.18), transparent 35%),
+        linear-gradient(180deg, #0a0d1d 0%, #11152a 100%);
+}
+
+/* =========================
+   COMMON UI
+========================= */
+
+.screen {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.center-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.primary-btn {
+    border: none;
+    border-radius: 18px;
+    padding: 16px 28px;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    background: linear-gradient(180deg, #8e5bff 0%, #5b38c9 100%);
+    box-shadow:
+        0 6px 20px rgba(123, 75, 255, 0.45),
+        inset 0 1px 0 rgba(255,255,255,0.3);
+}
+
+.primary-btn:hover {
+    transform: translateY(-1px);
+}
+
+.title-big {
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 900;
+    text-align: center;
+    line-height: 1.1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+
+.subtitle {
+    font-size: 18px;
+    opacity: 0.9;
+    text-align: center;
+}
+
+.skip-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 50;
+    border: none;
+    border-radius: 14px;
+    padding: 10px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    color: white;
+    background: rgba(15, 20, 40, 0.85);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+
+/* =========================
+   INTRO VIDEO
+========================= */
+
+.intro-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: black;
+}
+
+/* =========================================================
+   STAR THEFT SCENE — МАСШТАБИРУЕМАЯ СЦЕНА
+========================================================= */
+
+.star-theft-scene {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(100vw, calc(100vh * 16 / 9));
+    height: min(100vh, calc(100vw * 9 / 16));
+    overflow: hidden;
+    background: #070817;
+    opacity: 1;
+    transition: opacity 0.7s ease;
+}
+
+.star-theft-scene.fade-out {
+    opacity: 0;
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.theft-background {
+    position: absolute;
+    inset: 0;
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transform: scale(1.02);
+
+    transition:
+        opacity 0.45s ease,
+        transform 2s ease;
+
+    z-index: 0;
+}
+
+.theft-background::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 55%,
+            transparent 20%,
+            rgba(4, 5, 18, 0.16) 70%,
+            rgba(3, 4, 14, 0.38) 100%
+        );
+
+    pointer-events: none;
+}
+
+.theft-background.corridor {
+    transform: scale(1.08);
+}
+
+
+/* =========================================================
+   CHARACTERS
+========================================================= */
+
+.theft-character {
+    position: absolute;
+
+    display: block;
+
+    object-fit: contain;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    z-index: 5;
+
+    filter:
+        drop-shadow(
+            0 14px 18px rgba(0, 0, 0, 0.32)
+        );
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease,
+        left 0.35s ease,
+        right 0.35s ease,
+        bottom 0.35s ease;
+}
+
+.theft-character.visible {
+    opacity: 1;
+}
+
+
+/* =========================
+   RUMI
+========================= */
+
+.theft-rumi {
+    height: 120%;
+
+    right: -5%;
+    bottom: -30%;
+
+    opacity: 1;
+}
+
+
+/* =========================
+   MIRA
+========================= */
+
+.theft-mira {
+    height: 110%;
+
+    left: 22%;
+    bottom: -25%;
+
+    opacity: 1;
+}
+
+
+/* =========================
+   ZOEY
+========================= */
+
+.theft-zoey {
+    height: 110%;
+
+    left: 3%;
+    bottom: -25%;
+
+    opacity: 1;
+}
+
+
+/* =========================
+   HOSHI
+========================= */
+
+.theft-hoshi {
+    height: min(37vh, 390px);
+
+    left: 50%;
+    bottom: 15%;
+
+    transform:
+        translateX(-50%);
+
+    opacity: 1;
+}
+
+
+/* =========================================================
+   HOSHI EXPRESSIONS / MOVEMENT
+========================================================= */
+
+.hoshi-look-up {
+    animation:
+        hoshiLookUp
+        0.7s ease-in-out
+        infinite alternate;
+}
+
+@keyframes hoshiLookUp {
+
+    from {
+        transform:
+            translateX(-50%)
+            translateY(0)
+            rotate(-1deg);
+    }
+
+    to {
+        transform:
+            translateX(-50%)
+            translateY(-8px)
+            rotate(2deg);
+    }
+
+}
+
+
+.hoshi-mischief-bounce {
+    animation:
+        hoshiMischiefBounce
+        0.55s ease
+        infinite alternate;
+}
+
+@keyframes hoshiMischiefBounce {
+
+    from {
+        transform:
+            translateX(-50%)
+            translateY(0)
+            scale(1);
+    }
+
+    to {
+        transform:
+            translateX(-50%)
+            translateY(-7px)
+            scale(1.025);
+    }
+
+}
+
+
+.hoshi-reaching {
+    transform:
+        translateX(-50%)
+        translateY(-12px)
+        scale(1.04);
+}
+
+
+.hoshi-run-away {
+    animation:
+        hoshiRunAway
+        0.58s
+        cubic-bezier(.62,.01,.72,.98)
+        forwards;
+}
+
+@keyframes hoshiRunAway {
+
+    0% {
+        left: 50%;
+
+        transform:
+            translateX(-50%)
+            scale(1);
+    }
+
+    20% {
+        transform:
+            translateX(-50%)
+            scaleX(0.92)
+            scaleY(1.08);
+    }
+
+    100% {
+        left: 118%;
+
+        transform:
+            translateX(-50%)
+            scaleX(1.08)
+            scaleY(0.94);
+    }
+
+}
+
+
+/* =========================
+   HUMAN REACTION
+========================= */
+
+.character-alert {
+    animation:
+        characterAlert
+        0.35s ease;
+}
+
+@keyframes characterAlert {
+
+    0% {
+        transform:
+            translateY(0);
+    }
+
+    40% {
+        transform:
+            translateY(-8px);
+    }
+
+    100% {
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+/* =========================================================
+   STARS
+========================================================= */
+
+.theft-stars {
+    position: absolute;
+
+    left: 50%;
+    top: 43%;
+
+    width: 1px;
+    height: 1px;
+
+    opacity: 0;
+
+    z-index: 8;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.4s ease,
+        left 0.35s ease,
+        top 0.35s ease,
+        transform 0.35s ease;
+}
+
+.theft-stars.visible {
+    opacity: 1;
+}
+
+
+.theft-star {
+    position: absolute;
+
+    width: clamp(
+        38px,
+        4vw,
+        70px
+    );
+
+    height: auto;
+
+    left: 0;
+    top: 0;
+
+    transform:
+        translate(
+            var(--star-x),
+            var(--star-y)
+        );
+
+    filter:
+        drop-shadow(
+            0 0 8px rgba(255, 236, 160, 0.9)
+        )
+        drop-shadow(
+            0 0 18px rgba(255, 196, 75, 0.65)
+        );
+
+    animation:
+        theftStarFloat
+        1.8s ease-in-out
+        infinite alternate;
+}
+
+
+@keyframes theftStarFloat {
+
+    from {
+        margin-top: -4px;
+
+        scale: 0.95;
+    }
+
+    to {
+        margin-top: 5px;
+
+        scale: 1.05;
+    }
+
+}
+
+
+/* =========================
+   STARS GET STOLEN
+========================= */
+
+.theft-stars.stolen {
+    left: 49%;
+    top: 70%;
+
+    transform:
+        scale(0.72);
+}
+
+/* =========================================================
+   STOLEN STARS RUN AWAY WITH HOSHI
+========================================================= */
+
+.theft-stars.stolen.stars-run-away {
+    animation:
+        stolenStarsRunAway
+        0.58s
+        cubic-bezier(.62,.01,.72,.98)
+        forwards;
+}
+
+
+@keyframes stolenStarsRunAway {
+
+    0% {
+        left: 55%;
+        top: 47%;
+
+        transform:
+            scale(0.72);
+    }
+
+    20% {
+        transform:
+            scale(0.68)
+            rotate(-3deg);
+    }
+
+    100% {
+        left: 120%;
+        top: 47%;
+
+        transform:
+            scale(0.72)
+            rotate(4deg);
+    }
+
+}
+
+
+.theft-stars.stolen .theft-star {
+    transition:
+        transform 0.32s ease;
+}
+
+
+.theft-stars.stolen .theft-star:nth-child(1) {
+    transform:
+        translate(-42px, -34px)
+        scale(0.85);
+}
+
+.theft-stars.stolen .theft-star:nth-child(2) {
+    transform:
+        translate(-24px, -54px)
+        scale(0.83);
+}
+
+.theft-stars.stolen .theft-star:nth-child(3) {
+    transform:
+        translate(0, -62px)
+        scale(0.8);
+}
+
+.theft-stars.stolen .theft-star:nth-child(4) {
+    transform:
+        translate(28px, -52px)
+        scale(0.83);
+}
+
+.theft-stars.stolen .theft-star:nth-child(5) {
+    transform:
+        translate(45px, -30px)
+        scale(0.82);
+}
+
+.theft-stars.stolen .theft-star:nth-child(6) {
+    transform:
+        translate(35px, 0)
+        scale(0.78);
+}
+
+.theft-stars.stolen .theft-star:nth-child(7) {
+    transform:
+        translate(-15px, 2px)
+        scale(0.78);
+}
+
+
+/* =========================================================
+   DIALOGUE
+========================================================= */
+.theft-dialogue {
+    position: absolute;
+    left: 20px;                /* небольшой отступ слева */
+    top: 20px;                 /* небольшой отступ сверху */
+    bottom: auto;              /* отменяем привязку к низу */
+    transform: none;           /* убираем центрирование */
+    
+    min-width: 182px;          /* 260px * 0.7 */
+    max-width: min(504px, 54.6vw); /* 720*0.7, 78vw*0.7 */
+    
+    padding: 11px 17px;        /* 15*0.7 ≈ 10.5 → 11, 24*0.7 ≈ 16.8 → 17 */
+    
+    border: 1px solid rgba(238, 208, 113, 0.75);
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(19, 18, 48, 0.94), rgba(8, 10, 27, 0.94));
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 0 0 24px rgba(130, 79, 255, 0.18);
+    
+    color: #fff7df;
+    font-size: clamp(14px, 1.54vw, 23.8px); /* 20*0.7=14, 2.2*0.7=1.54, 34*0.7=23.8 */
+    font-weight: 700;
+    text-align: left;          /* выравниваем текст по левому краю */
+    line-height: 1.25;
+    letter-spacing: 0.01em;
+    
+    opacity: 0;
+    z-index: 30;
+    pointer-events: none;
+    
+    transition: opacity 0.18s ease; /* убираем transform из transition */
+}
+
+.theft-dialogue.show {
+    opacity: 1;
+    transform: none;          /* убираем старую трансформацию */
+}
+
+/* =========================================================
+   CHASE
+========================================================= */
+
+.star-theft-scene.start-chase {
+
+    background:
+        #050612;
+}
+
+
+/* =========================
+   HOSHI CHASE
+========================= */
+
+.chase-hoshi {
+    position: absolute;
+
+    height:
+        min(
+            32vh,
+            340px
+        );
+
+    right: -25%;
+    bottom: 17%;
+
+    opacity: 1;
+
+    z-index: 8;
+
+    animation:
+        chaseHoshiBounce
+        0.32s ease-in-out
+        infinite alternate;
+}
+
+
+@keyframes chaseHoshiBounce {
+
+    from {
+        transform:
+            translateY(0)
+            rotate(-3deg);
+    }
+
+    to {
+        transform:
+            translateY(-14px)
+            rotate(4deg);
+    }
+
+}
+
+
+/* =========================================================
+   FLASH
+========================================================= */
+
+.theft-flash {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        rgba(
+            255,
+            246,
+            204,
+            0.95
+        );
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    z-index: 100;
+
+    transition:
+        opacity 0.08s ease;
+
+}
+
+
+.theft-flash.active {
+
+    opacity: 1;
+
+}
+
+
+/* =========================================================
+   IMPACT SHAKE
+========================================================= */
+
+.star-theft-scene.impact-shake {
+
+    animation:
+        theftImpactShake
+        0.38s linear;
+
+}
+
+
+@keyframes theftImpactShake {
+
+    0% {
+        transform:
+            translate(0, 0);
+    }
+
+    15% {
+        transform:
+            translate(-7px, 4px);
+    }
+
+    30% {
+        transform:
+            translate(7px, -4px);
+    }
+
+    45% {
+        transform:
+            translate(-5px, -3px);
+    }
+
+    60% {
+        transform:
+            translate(5px, 3px);
+    }
+
+    80% {
+        transform:
+            translate(-2px, 2px);
+    }
+
+    100% {
+        transform:
+            translate(0, 0);
+    }
+
+}
+
+
+.theft-foreground-table {
+    position: absolute;
+
+    left: 49%;
+    bottom: -10px;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+    height: auto;
+
+    z-index: 12;
+
+    pointer-events: none;
+
+    user-select: none;
+}
+
+/* =========================================================
+   CHASE — FINAL CHARACTER POSITIONS
+========================================================= */
+
+
+/* =========================
+   HOSHI
+========================= */
+
+.chase-hoshi {
+
+    position: absolute;
+
+    /*
+        РАЗМЕР ХОШИ
+    */
+    height: 35vh;
+
+    width: auto;
+
+    /*
+        ПОЛОЖЕНИЕ ХОШИ
+
+        left больше  → правее
+        left меньше  → левее
+
+        bottom больше → выше
+        bottom меньше → ниже
+    */
+    left: 67%;
+    bottom: 12%;
+
+    opacity: 1;
+
+    z-index: 8;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 12px 18px
+            rgba(0, 0, 0, 0.35)
+        );
+}
+
+
+/* =========================
+   RUMI
+========================= */
+
+.chase-rumi {
+
+    position: absolute;
+
+    /*
+        РАЗМЕР ZOEY
+    */
+    height: 59vh;
+
+    width: auto;
+
+    /*
+        ПОЛОЖЕНИЕ ZOEY
+    */
+    left: 36%;
+    bottom: 4%;
+
+    opacity: 1;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+
+/* =========================
+   MIRA
+========================= */
+
+.chase-mira {
+
+    position: absolute;
+
+    /*
+        РАЗМЕР MIRA
+    */
+    height: 61vh;
+
+    width: auto;
+
+    /*
+        ПОЛОЖЕНИЕ MIRA
+    */
+    left: 20%;
+    bottom: 1%;
+
+    opacity: 1;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+
+/* =========================
+   ZOEY
+========================= */
+
+.chase-zoey {
+
+    position: absolute;
+
+    /*
+        РАЗМЕР RUMI
+    */
+    height: 64vh;
+
+    width: auto;
+
+    /*
+        ПОЛОЖЕНИЕ RUMI
+    */
+    left: 4%;
+    bottom: -5%;
+
+    opacity: 1;
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CHASE START — MOVE EVERYBODY TO THE RIGHT
+========================================================= */
+
+.star-theft-scene.chase-moving
+.chase-rumi {
+
+    animation:
+        chaseRumiForward
+        4.3s
+        linear
+        forwards;
+}
+
+
+.star-theft-scene.chase-moving
+.chase-mira {
+
+    animation:
+        chaseMiraForward
+        4.3s
+        linear
+        forwards;
+}
+
+
+.star-theft-scene.chase-moving
+.chase-zoey {
+
+    animation:
+        chaseZoeyForward
+        4.3s
+        linear
+        forwards;
+}
+
+
+.star-theft-scene.chase-moving
+.chase-hoshi {
+
+    animation:
+        chaseHoshiForward
+        4.3s
+        linear
+        forwards;
+}
+
+
+/* =========================================================
+   RUMI MOVEMENT
+========================================================= */
+
+@keyframes chaseRumiForward {
+
+    0% {
+
+        left: 36%;
+
+        transform:
+            translateY(0);
+
+    }
+
+
+    25% {
+
+        transform:
+            translateY(-9px);
+
+    }
+
+
+    50% {
+
+        transform:
+            translateY(0);
+
+    }
+
+
+    75% {
+
+        transform:
+            translateY(-9px);
+
+    }
+
+
+    100% {
+
+        left: 53%;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   MIRA MOVEMENT
+========================================================= */
+
+@keyframes chaseMiraForward {
+
+    0% {
+
+        left: 20%;
+
+        transform:
+            translateY(0);
+
+    }
+
+
+    25% {
+
+        transform:
+            translateY(-6px);
+
+    }
+
+
+    50% {
+
+        transform:
+            translateY(0);
+
+    }
+
+
+    75% {
+
+        transform:
+            translateY(-6px);
+
+    }
+
+
+    100% {
+
+        left: 37%;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   ZOEY MOVEMENT
+========================================================= */
+
+@keyframes chaseZoeyForward {
+
+    0% {
+
+        left: 4%;
+
+        transform:
+            translateY(0);
+
+    }
+
+
+    25% {
+
+        transform:
+            translateY(-7px);
+
+    }
+
+
+    50% {
+
+        transform:
+            translateY(0);
+
+    }
+
+
+    75% {
+
+        transform:
+            translateY(-7px);
+
+    }
+
+
+    100% {
+
+        left: 21%;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI MOVEMENT
+========================================================= */
+
+@keyframes chaseHoshiForward {
+
+    0% {
+
+        left: 67%;
+
+        transform:
+            translateY(0)
+            rotate(-2deg);
+
+    }
+
+
+    20% {
+
+        transform:
+            translateY(-12px)
+            rotate(3deg);
+
+    }
+
+
+    40% {
+
+        transform:
+            translateY(0)
+            rotate(-2deg);
+
+    }
+
+
+    60% {
+
+        transform:
+            translateY(-12px)
+            rotate(3deg);
+
+    }
+
+
+    80% {
+
+        transform:
+            translateY(0)
+            rotate(-2deg);
+
+    }
+
+
+    100% {
+
+        left: 84%;
+
+        transform:
+            translateY(-7px)
+            rotate(2deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   CORRIDOR MOVES SLIGHTLY LEFT
+========================================================= */
+
+.star-theft-scene.chase-moving
+.theft-background {
+
+    animation:
+        chaseCorridorMove
+        4.3s
+        linear
+        forwards;
+
+}
+
+
+@keyframes chaseCorridorMove {
+
+    from {
+
+        transform:
+            scale(1.05)
+            translateX(0);
+
+    }
+
+
+    to {
+
+        transform:
+            scale(1.12)
+            translateX(-3%);
+
+    }
+
+}
+
+
+/* =========================================================
+   SINGLE FALLING STAR
+========================================================= */
+
+.chase-falling-star {
+
+    position: absolute;
+
+    /*
+        Начинается примерно возле рук Хоши.
+        ЭТИ КООРДИНАТЫ потом можем спокойно
+        подогнать под твой PNG.
+    */
+
+    left: 78%;
+    top: 41%;
+
+    width: clamp(
+        42px,
+        4vw,
+        70px
+    );
+
+    height: auto;
+
+    opacity: 0;
+
+    z-index: 40;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 0 9px
+            rgba(255, 239, 167, 0.95)
+        )
+        drop-shadow(
+            0 0 22px
+            rgba(255, 188, 61, 0.78)
+        );
+
+}
+
+
+/* =========================================================
+   STAR FLIES BACK AND OFF SCREEN
+========================================================= */
+
+.chase-falling-star.fly-out {
+
+    opacity: 1;
+
+    animation:
+        chaseStarFlyAway
+        1s
+        cubic-bezier(.34,.02,.54,1)
+        forwards;
+
+}
+
+
+@keyframes chaseStarFlyAway {
+
+    0% {
+
+        left: 78%;
+        top: 41%;
+
+        transform:
+            rotate(0deg)
+            scale(0.75);
+
+    }
+
+
+    30% {
+
+        left: 62%;
+        top: 36%;
+
+        transform:
+            rotate(-220deg)
+            scale(1.05);
+
+    }
+
+
+    65% {
+
+        left: 31%;
+        top: 43%;
+
+        transform:
+            rotate(-470deg)
+            scale(1.12);
+
+    }
+
+
+    100% {
+
+        left: -8%;
+        top: 53%;
+
+        transform:
+            rotate(-760deg)
+            scale(0.9);
+
+    }
+
+}
+
+/* =========================================================
+   CHARACTER SPEAKING
+========================================================= */
+
+.character-speaking {
+    animation:
+        characterSpeaking
+        0.22s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes characterSpeaking {
+
+    0% {
+        translate: 0 0;
+    }
+
+    28% {
+        translate: 0 -1px;
+    }
+
+    55% {
+        translate: 0 0;
+    }
+
+    78% {
+        translate: 0 -0.5px;
+    }
+
+    100% {
+        translate: 0 0;
+    }
+}
+
+.theft-hoshi.character-speaking {
+    animation:
+        hoshiSpeaking
+        0.18s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes hoshiSpeaking {
+
+    0% {
+        translate: 0 0;
+        rotate: 0deg;
+    }
+
+    30% {
+        translate: 0 -2px;
+        rotate: -0.4deg;
+    }
+
+    60% {
+        translate: 0 0;
+        rotate: 0deg;
+    }
+
+    82% {
+        translate: 0 -1px;
+        rotate: 0.4deg;
+    }
+
+    100% {
+        translate: 0 0;
+        rotate: 0deg;
+    }
+}
+
+/* =========================================================
+   PUZZLE SCENE — МАСШТАБИРУЕМАЯ
+========================================================= */
+
+.puzzle-scene {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(100vw, calc(100vh * 16 / 9));
+    height: min(100vh, calc(100vw * 9 / 16));
+    overflow: hidden;
+    background: 
+        url("/assets/images/magic_corridor_bg.png") center/cover no-repeat,
+        #080d22;
+}
+
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.puzzle-topbar {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 76px;
+
+    z-index: 60;
+
+    pointer-events: none;
+}
+
+
+.puzzle-subtitle {
+    position: absolute;
+    left: 0;              /* или оставьте 16px, если нужен отступ */
+    top: 0;               /* или оставьте 14px */
+    max-width: 38.5%;     /* 55% * 0.7 */
+    padding: 7.7px 12.6px; /* 11px*0.7, 18px*0.7 – округлите до 8px 13px */
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 16px;
+    background: rgba(5, 9, 26, 0.88);
+    color: #ffffff;
+    font-size: clamp(11.2px, 1.05vw, 16.8px); /* 16*0.7, 1.5*0.7, 24*0.7 */
+    font-weight: 700;
+    line-height: 1.25;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+
+/*
+    Показываем subtitle,
+    если в нём есть текст.
+*/
+
+.puzzle-subtitle:not(:empty) {
+    opacity: 1;
+}
+
+
+
+
+/* =========================================================
+   STAGE
+========================================================= */
+
+.puzzle-stage {
+    position: absolute;
+
+    inset:
+        75px
+        0
+        0
+        0;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   BOARD WRAPPER
+========================================================= */
+
+.puzzle-board-wrap {
+    position: absolute;
+
+    left: 50%;
+    top: 42%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    /*
+        ГОРИЗОНТАЛЬНАЯ зона.
+    */
+
+    width:
+        min(45vw,712px);
+
+    max-height:45vh;
+
+    z-index: 3;
+}
+
+
+/* =========================================================
+   BOARD
+========================================================= */
+
+.puzzle-board {
+    position: relative;
+
+    width: 100%;
+
+    overflow: visible;
+}
+
+
+/* =========================================================
+   ROTATED FRAME
+========================================================= */
+
+.puzzle-frame {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    /*
+        Width / height выставляет JS,
+        потому что исходная PNG вертикальная.
+    */
+
+    max-width: none !important;
+    max-height: none !important;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+
+    transform-origin:
+        center center;
+
+    object-fit:
+        fill;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    user-select: none;
+}
+
+
+/* =========================================================
+   FULL COMPLETED IMAGE
+========================================================= */
+
+.puzzle-full {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: fill;
+
+    opacity: 0;
+
+    z-index: 8;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.4s ease;
+}
+
+
+.puzzle-full.visible {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   SLOTS
+========================================================= */
+
+.puzzle-slot {
+    position: absolute;
+
+    z-index: 2;
+
+    border:
+        2px dashed
+        rgba(190, 190, 255, 0.13);
+
+    box-sizing:
+        border-box;
+
+    transition:
+        background 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.15s ease;
+}
+
+
+.puzzle-slot.highlight {
+    border-color:
+        rgba(255, 225, 111, 0.9);
+
+    background:
+        rgba(255, 215, 80, 0.08);
+
+    box-shadow:
+        inset
+        0 0 25px
+        rgba(255, 212, 68, 0.22);
+}
+
+
+.puzzle-slot.filled {
+    border-color:
+        transparent;
+}
+
+
+/* =========================================================
+   PIECES
+========================================================= */
+
+.puzzle-piece {
+    position: absolute;
+
+    object-fit:
+        fill;
+
+    cursor:
+        grab;
+
+    touch-action:
+        none;
+
+    user-select:
+        none;
+
+    z-index:
+        10;
+
+    border-radius:
+        2px;
+
+    filter:
+        drop-shadow(
+            0 8px 10px
+            rgba(0, 0, 0, 0.32)
+        );
+
+    transition:
+        filter 0.15s ease;
+}
+
+
+.puzzle-piece:hover {
+    filter:
+        drop-shadow(
+            0 0 14px
+            rgba(178, 130, 255, 0.7)
+        )
+        drop-shadow(
+            0 8px 10px
+            rgba(0, 0, 0, 0.32)
+        );
+}
+
+
+.puzzle-piece.dragging {
+    cursor:
+        grabbing;
+
+    filter:
+        drop-shadow(
+            0 0 20px
+            rgba(255, 220, 104, 0.85)
+        );
+
+    scale:
+        1.035;
+}
+
+
+.puzzle-piece.placed {
+    cursor:
+        default;
+
+    filter:
+        none;
+
+    scale:
+        1;
+}
+
+
+/* =========================================================
+   SPEAKING CHARACTERS
+========================================================= */
+
+.puzzle-speaker {
+    position: absolute;
+    bottom: -2%;
+    height: min(95vh,940px);
+    width: auto;
+    z-index:45;
+    opacity: 0;
+    pointer-events:none;
+    user-select:none;
+    filter: drop-shadow(0 16px 24px
+            rgba(0, 0, 0, 0.42));
+
+    transition: transform 0.28s
+        cubic-bezier(
+            .2,
+            .8,
+            .25,
+            1
+        ),
+        opacity 0.2s ease;
+}
+
+
+/* =========================================================
+   RUMI — LEFT
+========================================================= */
+
+.puzzle-speaker-rumi {
+    left: 5%;
+    bottom: -2%;
+    transform:
+        translateX(-88%);
+}
+
+
+.puzzle-speaker-rumi.show {
+    opacity: 1;
+
+    transform:
+        translateX(-30%);
+}
+
+
+/* =========================================================
+   MIRA — RIGHT
+========================================================= */
+
+.puzzle-speaker-mira {
+    right: 5%;
+
+    height:min(85vh,850px);
+
+    transform:
+        translateX(88%);
+}
+
+
+.puzzle-speaker-mira.show {
+    opacity: 1;
+
+    transform:
+        translateX(20%);
+        bottom: -2%;
+}
+
+
+/* =========================================================
+   ZOEY — RIGHT
+========================================================= */
+
+.puzzle-speaker-zoey {
+    right: 0;
+
+    height:
+        min(95vh,940px);
+        
+    transform:
+        translateX(88%);
+}
+
+
+.puzzle-speaker-zoey.show {
+    opacity: 1;
+
+    transform:
+        translateX(20%);
+        bottom: -2%;
+}
+
+
+/* =========================================================
+   SPEAKING MICRO-MOVEMENT
+========================================================= */
+
+/*
+    В пазле делаем ещё спокойнее,
+    чем было раньше.
+
+    Никакой "волны".
+*/
+
+.puzzle-speaker.character-speaking {
+    animation:
+        puzzleCharacterSpeaking
+        0.26s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes puzzleCharacterSpeaking {
+
+    0% {
+        translate:
+            0 0;
+    }
+
+    34% {
+        translate:
+            0 -0.8px;
+    }
+
+    65% {
+        translate:
+            0 0;
+    }
+
+    100% {
+        translate:
+            0 -0.4px;
+    }
+
+}
+
+
+/* =========================
+   MOTION INTRO
+========================= */
+
+.city-motion-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.city-motion-layer.show {
+    opacity: 1;
+}
+
+.city-motion-layer.intro-finished {
+    opacity: 0;
+}
+
+.city-motion-hoshi,
+.city-runner,
+.city-dropped-star {
+    position: absolute;
+    max-width: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+.city-motion-hoshi {
+    left: -15%;
+    top: 80% !important;
+    width: clamp(120px, 13vw, 220px);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    filter: drop-shadow(0 12px 12px rgba(0, 0, 0, 0.28));
+}
+
+.city-motion-hoshi.show {
+    opacity: 1;
+}
+
+.city-hoshi-distracted {
+    animation: cityHoshiDistracted 0.55s ease-in-out infinite alternate;
+}
+
+@keyframes cityHoshiDistracted {
+    from {
+        transform: translate(-50%, -50%) rotate(-2deg) scale(1);
+    }
+
+    to {
+        transform: translate(-50%, -54%) rotate(2deg) scale(1.035);
+    }
+}
+
+.city-runner {
+    left: -22%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.22));
+}
+
+.city-runner.show {
+    opacity: 1;
+}
+
+.city-runner-rumi {
+    top: 60% !important;
+    transform: translate(-50%, -50%) scale(0.5) !important;
+}
+
+.city-runner-mira {
+    top: 64% !important;
+    transform: translate(-50%, -50%) scale(0.4) !important;
+}
+
+.city-runner-zoey {
+    top: 66% !important;
+    transform: translate(-50%, -50%) scale(0.6) !important;
+}
+
+.city-dropped-star {
+    left: 67%;
+    top: 53%;
+    width: clamp(48px, 5vw, 86px);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7) rotate(0deg);
+    filter:
+        drop-shadow(0 0 10px rgba(255, 244, 145, 0.95))
+        drop-shadow(0 0 24px rgba(255, 201, 77, 0.72));
+}
+
+.city-dropped-star.show {
+    opacity: 1;
+}
+
+.city-dropped-star.fall {
+    top: 82%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.45) rotate(210deg);
+    transition:
+        top 0.95s ease-in,
+        opacity 0.95s ease-in,
+        transform 0.95s ease-in;
+}
+
+.city-search-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;    /* или cover, если нужно заполнить без пустых областей */
+    z-index: 0;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* =========================
+   TOP UI
+========================= */
+
+.city-search-ui {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.city-search-ui.show {
+    opacity: 1;
+}
+
+.city-search-topbar {
+    position: absolute;
+    left: 3%;
+    right: 3%;
+    top: 2.5%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.city-search-subtitle {
+    position: absolute;           /* вырываем из потока */
+    left: 20px;                   /* отступ слева */
+    top: 20px;                    /* отступ сверху */
+    max-width: min(40.6vw, 546px); /* было 58vw → 40.6vw, 780px → 546px */
+    min-height: 38px;             /* было 54px → 38px */
+    padding: 8px 13px;            /* было 12px 18px → примерно 8px 13px */
+    border-radius: 18px;
+    background: rgba(21, 15, 47, 0.74);
+    border: 2px solid rgba(255, 225, 122, 0.72);
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.26),
+        0 0 22px rgba(153, 102, 255, 0.24);
+    color: #fff9df;
+    font-size: clamp(12.6px, 1.4vw, 21px); /* было 18px → 12.6, 2vw → 1.4, 30px → 21 */
+    font-weight: 800;
+    line-height: 1.18;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.55);
+    opacity: 0;                   /* как было */
+    transition: opacity 0.3s ease;
+    z-index: 70;                  /* поверх других элементов, если нужно */
+    pointer-events: none;         /* чтобы не мешать кликам */
+}
+
+.city-search-subtitle:empty {
+    opacity: 0;
+}
+
+
+
+/* =========================
+   WHAT TO FIND
+========================= */
+
+.city-target-card {
+    position: absolute;
+    left: 3%;
+    top: 17%;
+    width: clamp(112px, 12vw, 184px);
+    padding: 10px 12px 14px;
+    border-radius: 22px;
+    background: rgba(25, 16, 58, 0.84);
+    border: 2px solid rgba(255, 224, 112, 0.8);
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.3),
+        0 0 28px rgba(181, 113, 255, 0.28);
+    opacity: 0;
+    transform: translateX(-25px) scale(0.94);
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.city-target-card.show {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+}
+
+.city-target-label {
+    margin-bottom: 6px;
+    color: #ffe985;
+    text-align: center;
+    font-size: clamp(13px, 1.3vw, 20px);
+    font-weight: 900;
+    letter-spacing: 0.12em;
+}
+
+.city-target-card img {
+    display: block;
+    width: 100%;
+    max-height: 112px;
+    object-fit: contain;
+    filter:
+        drop-shadow(0 0 7px rgba(255, 236, 132, 0.8))
+        drop-shadow(0 0 15px rgba(157, 107, 255, 0.55));
+}
+
+/* =========================
+   CLUES + ROUTE
+========================= */
+
+.city-route-layer,
+.city-clues-layer {
+    position: absolute;
+    inset: 0;
+}
+
+.city-route-layer {
+    z-index: 12;
+    pointer-events: none;
+}
+
+.city-clues-layer {
+    z-index: 18;
+    pointer-events: none;
+}
+
+.city-route-segment {
+    position: absolute;
+    height: clamp(5px, 0.55vw, 9px);
+    border-radius: 999px;
+    transform-origin: left center;
+    opacity: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 244, 144, 0.42),
+        rgba(255, 218, 82, 0.96),
+        rgba(255, 248, 184, 0.82)
+    );
+    box-shadow:
+        0 0 7px rgba(255, 241, 140, 0.95),
+        0 0 18px rgba(255, 191, 68, 0.72),
+        0 0 32px rgba(174, 107, 255, 0.4);
+    transform: rotate(var(--route-angle, 0deg)) scaleX(0);
+}
+
+.city-route-segment::after {
+    content: "";
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    background: #fff4a8;
+    box-shadow:
+        0 0 10px #fff2a0,
+        0 0 22px rgba(255, 200, 63, 0.95);
+}
+
+.city-route-segment.draw {
+    opacity: 1;
+    transform: rotate(var(--route-angle, 0deg)) scaleX(1);
+    transition:
+        transform 0.55s ease-out,
+        opacity 0.18s ease;
+}
+
+.city-clue {
+    position: absolute;
+    transform: translate(-50%, -50%) scale(0.88);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    opacity: 0;
+    pointer-events: none;
+    cursor: pointer;
+    transition:
+        opacity 0.22s ease,
+        transform 0.22s ease,
+        filter 0.22s ease;
+}
+
+.city-clue img {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 2;
+    pointer-events: none;
+    filter:
+        drop-shadow(0 0 7px rgba(255, 236, 130, 0.8))
+        drop-shadow(0 0 16px rgba(165, 102, 255, 0.62));
+}
+
+.city-clue-glow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 135%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(255, 236, 128, 0.42),
+        rgba(191, 116, 255, 0.18) 48%,
+        transparent 72%
+    );
+    animation: cityCluePulse 1.25s ease-in-out infinite alternate;
+}
+
+@keyframes cityCluePulse {
+    from {
+        transform: translate(-50%, -50%) scale(0.88);
+        opacity: 0.62;
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(1.08);
+        opacity: 1;
+    }
+}
+
+.city-clue.available {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto;
+}
+
+.city-clue.available:hover {
+    transform: translate(-50%, -50%) scale(1.08);
+}
+
+.city-clue.found {
+    transform: translate(-50%, -50%) scale(1.22);
+    filter: brightness(1.25);
+}
+
+.city-clue.done {
+    opacity: 0.34;
+    transform: translate(-50%, -50%) scale(0.92);
+    pointer-events: none;
+}
+
+
+
+/* =========================
+   HIDDEN HOSHI
+========================= */
+
+.city-hidden-hoshi {
+    position: absolute;
+    z-index: 17;
+    transform: translate(-50%, -50%);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    opacity: 0;
+    pointer-events: none;
+    cursor: pointer;
+    transition:
+        opacity 0.18s ease,
+        transform 0.18s ease;
+}
+
+.city-hidden-hoshi img {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+    clip-path: inset(0 0 48% 0);
+    filter: drop-shadow(0 7px 7px rgba(0, 0, 0, 0.3));
+}
+
+.city-hidden-hoshi.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.city-hidden-hoshi.startled {
+    transform: translate(-50%, -62%) scale(1.18) rotate(-5deg);
+}
+
+.city-hidden-hoshi.startled img {
+    clip-path: inset(0 0 0 0);
+}
+
+.city-hidden-hoshi.cautious {
+    transform: translate(-50%, -50%) scale(0.78);
+    pointer-events: none;
+}
+
+.city-hidden-hoshi.cautious img {
+    clip-path: inset(18% 0 57% 0);
+}
+
+/* =========================
+   SPEAKERS
+========================= */
+
+.city-speaker {
+    position: absolute;
+    bottom: -2%;
+    z-index: 60;
+    width: clamp(170px, 23vw, 380px);
+    max-height: 78%;
+    object-fit: contain;
+    object-position: bottom;
+    opacity: 0;
+    pointer-events: none;
+    filter: drop-shadow(0 16px 18px rgba(0, 0, 0, 0.32));
+    transition:
+        opacity 0.18s ease,
+        transform 0.24s ease;
+}
+
+.city-speaker-left {
+    left: 0;
+    transform: translateX(-72%);
+}
+
+.city-speaker-right {
+    right: 0;
+    transform: translateX(72%);
+}
+
+.city-speaker-left.show {
+    opacity: 1;
+    transform: translateX(-6%);
+}
+
+.city-speaker-right.show {
+    opacity: 1;
+    transform: translateX(6%);
+}
+
+.city-speaker-rumi {
+    width: clamp(240px, 30vw, 500px);
+}
+
+.city-speaker-mira {
+    width: clamp(170px, 22vw, 365px);
+}
+
+.city-speaker-zoey {
+    width: clamp(220px, 28vw, 480px);
+}
+
+/* =========================
+   FINAL STAR RACE
+========================= */
+
+.city-star-race {
+    position: absolute;
+    inset: 0;
+    z-index: 45;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.city-star-race.show {
+    opacity: 1;
+}
+
+.city-final-star {
+    --collect-x: 0px;
+    --collect-y: 0px;
+
+    position: absolute;
+    left: 53%;
+    top: 57%;
+    width: clamp(76px, 8vw, 138px);
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    transform: translate(-50%, -50%) scale(0.88);
+    opacity: 1;
+    pointer-events: none;
+    cursor: pointer;
+    filter:
+        drop-shadow(0 0 12px rgba(255, 241, 124, 1))
+        drop-shadow(0 0 26px rgba(255, 185, 44, 0.88));
+}
+
+.city-final-star img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.city-final-star.ready {
+    pointer-events: auto;
+    animation: cityFinalStarReady 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes cityFinalStarReady {
+    from {
+        transform: translate(-50%, -50%) scale(0.92) rotate(-3deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(1.08) rotate(3deg);
+    }
+}
+
+.city-final-star.collect {
+    animation: none;
+    transform:
+        translate(
+            calc(-50% + var(--collect-x)),
+            calc(-50% + var(--collect-y))
+        )
+        scale(0.32)
+        rotate(260deg);
+    opacity: 0.15;
+    transition:
+        transform 0.62s cubic-bezier(0.2, 0.75, 0.25, 1),
+        opacity 0.62s ease;
+}
+
+.city-final-star.gone {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.city-reaching-hoshi {
+    position: absolute;
+    left: -30%;
+    top: 53%;
+    width: clamp(10px, 20vw, 230px);
+    max-width: none;
+    transform: translateY(-50%);
+    opacity: 0;
+    pointer-events: none;
+    filter: drop-shadow(0 14px 15px rgba(0, 0, 0, 0.3));
+}
+
+.city-reaching-hoshi.reach {
+    left: 24%;
+    opacity: 1;
+    transition:
+        right 4.8s cubic-bezier(0.18, 0.72, 0.22, 1),
+        opacity 0.3s ease;
+}
+
+.city-reaching-hoshi.missed {
+    left: 22%;
+    opacity: 1;
+    transform: translateY(-50%) rotate(-5deg) scale(0.96);
+    animation: cityHoshiMissed 0.34s ease-in-out 2;
+}
+
+@keyframes cityHoshiMissed {
+    0%, 100% {
+        transform: translateY(-50%) rotate(-4deg);
+    }
+
+    50% {
+        transform: translateY(-50%) rotate(4deg);
+    }
+}
+
+.city-reaching-hoshi.run-away {
+    right: -34%;
+    opacity: 1;
+    transition: right 0.52s ease-in;
+}
+
+/* =========================================================
+   TARGET CARD — ЧТО ИСКАТЬ
+========================================================= */
+
+.city-target-card {
+    position: absolute;
+
+    left: 3%;
+    top: 18%;
+
+    width:
+        clamp(
+            105px,
+            10vw,
+            165px
+        );
+
+    padding:
+        12px;
+
+    box-sizing: border-box;
+
+    border-radius: 22px;
+
+    background:
+        rgba(24, 12, 54, 0.88);
+
+    border:
+        2px solid
+        rgba(255, 230, 116, 0.8);
+
+    box-shadow:
+        0 0 18px
+        rgba(255, 218, 83, 0.35),
+
+        inset 0 0 18px
+        rgba(176, 90, 255, 0.18);
+
+    opacity: 0;
+
+    transform:
+        translateX(-20px)
+        scale(0.9);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+
+    pointer-events: none;
+}
+
+
+.city-target-card.show {
+    opacity: 1;
+
+    transform:
+        translateX(0)
+        scale(1);
+}
+
+
+.city-target-label {
+    margin-bottom: 8px;
+
+    text-align: center;
+
+    color:
+        #ffe96f;
+
+    font-size:
+        clamp(
+            14px,
+            1.4vw,
+            21px
+        );
+
+    font-weight: 900;
+
+    letter-spacing:
+        0.12em;
+
+    text-shadow:
+        0 0 8px
+        rgba(255, 222, 77, 0.7);
+}
+
+
+.city-target-card img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    max-height: 105px;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(255, 238, 137, 0.75)
+        );
+}
+
+
+/* =========================================================
+   CLUES LAYER
+========================================================= */
+
+.city-clues-layer {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 25;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CLUE
+========================================================= */
+
+.city-clue {
+    position: absolute;
+
+    padding: 0;
+
+    margin: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.28s ease,
+        transform 0.28s ease,
+        filter 0.28s ease;
+}
+
+
+.city-clue img {
+    position: relative;
+
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   ТЕКУЩИЙ СЛЕД
+
+   ВАЖНО:
+   Он не должен быть настолько спрятан,
+   чтобы ребёнок десять минут смотрел
+   в монитор 😂
+========================================================= */
+
+.city-clue.available {
+    opacity: 0.92;
+
+    pointer-events: auto;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            rgba(255, 241, 166, 0.8)
+        );
+}
+
+
+.city-clue.available:hover {
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1.1);
+
+    filter:
+        drop-shadow(
+            0 0 9px
+            rgba(255, 245, 182, 1)
+        )
+
+        drop-shadow(
+            0 0 18px
+            rgba(193, 114, 255, 0.85)
+        );
+}
+
+
+/* =========================================================
+   МЯГКОЕ МЕРЦАНИЕ
+
+   Оно подсказывает ребёнку,
+   но не превращает поиск в
+   огромную мигающую кнопку.
+========================================================= */
+
+.city-clue-glow {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 145%;
+    aspect-ratio: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 240, 146, 0.42) 0%,
+            rgba(197, 113, 255, 0.24) 38%,
+            rgba(197, 113, 255, 0) 72%
+        );
+
+    z-index: 1;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+.city-clue.available .city-clue-glow {
+    opacity: 1;
+
+    animation:
+        cityClueGlow
+        1.7s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes cityClueGlow {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.82);
+
+        opacity: 0.35;
+    }
+
+    50% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1.08);
+
+        opacity: 0.85;
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.82);
+
+        opacity: 0.35;
+    }
+
+}
+
+
+/* =========================================================
+   FOUND
+========================================================= */
+
+.city-clue.found {
+    opacity: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1.2);
+
+    filter:
+        drop-shadow(
+            0 0 14px
+            rgba(255, 236, 112, 1)
+        )
+
+        drop-shadow(
+            0 0 30px
+            rgba(184, 94, 255, 0.9)
+        );
+}
+
+
+.city-clue.done {
+    opacity: 0.6;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 0 5px
+            rgba(255, 228, 119, 0.55)
+        );
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.82);
+}
+
+
+/* =========================================================
+   GOLDEN ROUTE
+========================================================= */
+
+.city-route-layer {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 22;
+
+    pointer-events: none;
+}
+
+
+.city-route-segment {
+    position: absolute;
+
+    height: 5px;
+
+    transform-origin:
+        left center;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 243, 168, 0.95),
+            rgba(255, 205, 65, 0.95),
+            rgba(222, 147, 255, 0.88)
+        );
+
+    box-shadow:
+        0 0 6px
+        rgba(255, 239, 146, 0.95),
+
+        0 0 15px
+        rgba(255, 196, 68, 0.65),
+
+        0 0 24px
+        rgba(186, 90, 255, 0.45);
+
+    opacity: 0;
+}
+
+
+.city-route-segment.draw {
+    opacity: 1;
+
+    animation:
+        cityRouteAppear
+        0.45s
+        ease-out;
+}
+
+
+@keyframes cityRouteAppear {
+
+    from {
+        opacity: 0;
+
+        filter:
+            brightness(2);
+    }
+
+    to {
+        opacity: 1;
+
+        filter:
+            brightness(1);
+    }
+
+}
+
+
+/* =========================================================
+   DISTRACTIONS
+========================================================= */
+
+.city-distraction {
+    position: absolute;
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    z-index: 24;
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
+}
+
+
+.city-distraction img {
+    display: block;
+
+    width: 100%;
+
+    pointer-events: none;
+}
+
+
+/* Шарик */
+
+.city-balloon {
+    left: 78%;
+    top: 25%;
+
+    width:
+        clamp(68px, 6.5vw, 117px);
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+}
+
+
+/* Блестящая вывеска */
+
+.city-shiny-sign {
+    left: 43%;
+    top: 40%;
+
+    width:
+        clamp(
+            95px,
+            10vw,
+            180px
+        );
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+}
+
+
+.city-distraction:hover {
+    filter:
+        brightness(1.12);
+}
+
+
+.city-distraction.boop {
+    animation:
+        cityDistractionBoop
+        0.45s
+        ease-out;
+}
+
+
+@keyframes cityDistractionBoop {
+
+    0% {
+        scale: 1;
+    }
+
+    35% {
+        scale: 1.14;
+    }
+
+    65% {
+        scale: 0.94;
+    }
+
+    100% {
+        scale: 1;
+    }
+
+}
+/* =========================================================
+   FINAL STAR — CLICK FIX
+========================================================= */
+
+.city-star-race.show {
+    pointer-events: auto;
+}
+
+
+.city-final-star.show {
+    pointer-events: auto;
+
+    z-index: 60;
+}
+
+
+.city-final-star.ready {
+    pointer-events: auto;
+
+    cursor: pointer;
+
+    animation:
+        cityFinalStarReady
+        0.7s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+.city-reaching-hoshi {
+    pointer-events: none;
+}
+
+
+@keyframes cityFinalStarReady {
+
+    from {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.95);
+    }
+
+    to {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1.08);
+    }
+
+}
+
+/* =========================================================
+   SCENE 04 — HONMOON COLORING — МАСШТАБИРУЕМАЯ
+========================================================= */
+
+
+/* =========================================================
+   BASE
+========================================================= */
+
+.honmoon-scene {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(100vw, calc(100vh * 16 / 9));
+    height: min(100vh, calc(100vw * 9 / 16));
+    overflow: hidden;
+    background:
+        #120b2a;
+}
+
+
+.honmoon-bg {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    pointer-events: none;
+
+    user-select: none;
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.honmoon-topbar {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+
+    padding:
+        24px
+        30px;
+
+    z-index: 80;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.3s ease;
+}
+
+
+.honmoon-topbar.show {
+    opacity: 1;
+}
+
+
+.honmoon-subtitle {
+    max-width: 58%;
+
+    min-height: 54px;
+
+    padding:
+        12px
+        18px;
+
+    box-sizing: border-box;
+
+    border-radius: 18px;
+
+    background:
+        rgba(18, 11, 42, 0.72);
+
+    color:
+        #ffffff;
+
+    font-size:
+        clamp(
+            20px,
+            2.1vw,
+            34px
+        );
+
+    font-weight: 800;
+
+    line-height: 1.15;
+
+    text-shadow:
+        0 2px 6px
+        rgba(0, 0, 0, 0.8);
+
+    backdrop-filter:
+        blur(5px);
+}
+
+
+
+
+/* =========================================================
+   SPEAKERS
+========================================================= */
+
+.honmoon-speaker {
+    position: absolute;
+
+    bottom: -4%;
+
+    width:
+        clamp(
+            220px,
+            23vw,
+            410px
+        );
+
+    max-height: 82vh;
+
+    object-fit: contain;
+
+    z-index: 90;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        transform 0.28s ease,
+        opacity 0.22s ease;
+}
+
+
+.honmoon-speaker-left {
+    left: 0;
+
+    transform:
+        translateX(-105%);
+}
+
+
+.honmoon-speaker-right {
+    right: 0;
+
+    transform:
+        translateX(105%);
+}
+
+
+.honmoon-speaker-left.show {
+    opacity: 1;
+
+    transform:
+        translateX(-8%);
+}
+
+
+.honmoon-speaker-right.show {
+    opacity: 1;
+
+    transform:
+        translateX(8%);
+}
+
+
+.honmoon-speaker.character-speaking,
+.honmoon-runner.character-speaking {
+    animation:
+        honmoonCharacterSpeaking
+        0.22s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes honmoonCharacterSpeaking {
+
+    0% {
+        translate: 0 0;
+    }
+
+    30% {
+        translate: 0 -1px;
+    }
+
+    60% {
+        translate: 0 0;
+    }
+
+    80% {
+        translate: 0 -0.5px;
+    }
+
+    100% {
+        translate: 0 0;
+    }
+
+}
+
+
+/* =========================================================
+   MOTION INTRO LAYER
+========================================================= */
+
+.honmoon-motion-layer {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 30;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.35s ease;
+}
+
+
+.honmoon-motion-layer.show {
+    opacity: 1;
+}
+
+
+.honmoon-motion-layer.finished {
+    opacity: 0;
+}
+
+
+/* =========================================================
+   MOTION HOSHI
+========================================================= */
+
+.honmoon-motion-hoshi {
+    position: absolute;
+
+    left: -15%;
+    top: 62%;
+
+    width:
+        clamp(
+            130px,
+            13vw,
+            225px
+        );
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    z-index: 42;
+
+    opacity: 0;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 8px 12px
+            rgba(0, 0, 0, 0.5)
+        );
+}
+
+
+.honmoon-motion-hoshi.show {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   HOSHI — STUCK
+========================================================= */
+
+.honmoon-hoshi-stuck {
+    animation:
+        honmoonHoshiStuck
+        0.55s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes honmoonHoshiStuck {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    50% {
+        transform:
+            translate(
+                -47%,
+                -50%
+            )
+            rotate(2deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI — THINKING
+========================================================= */
+
+.honmoon-hoshi-thinking {
+    animation:
+        honmoonHoshiThinking
+        0.7s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes honmoonHoshiThinking {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(0deg);
+    }
+
+    50% {
+        transform:
+            translate(
+                -50%,
+                -52%
+            )
+            rotate(-4deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(0deg);
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI — PUSH
+========================================================= */
+
+.honmoon-hoshi-push {
+    animation:
+        honmoonHoshiPush
+        0.45s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes honmoonHoshiPush {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    50% {
+        transform:
+            translate(
+                -43%,
+                -50%
+            )
+            rotate(4deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+.honmoon-hoshi-push-hard {
+    animation:
+        honmoonHoshiPushHard
+        0.25s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes honmoonHoshiPushHard {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translate(
+                -39%,
+                -50%
+            )
+            scale(1.05)
+            rotate(6deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI — SHOCKED
+========================================================= */
+
+.honmoon-hoshi-shocked {
+    animation:
+        honmoonHoshiShocked
+        0.5s
+        ease-out;
+}
+
+
+@keyframes honmoonHoshiShocked {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+    45% {
+        transform:
+            translate(
+                -50%,
+                -64%
+            )
+            scale(1.09)
+            rotate(-5deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI — REPAIR
+========================================================= */
+
+.honmoon-hoshi-repair {
+    animation:
+        honmoonHoshiRepair
+        0.6s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes honmoonHoshiRepair {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    50% {
+        transform:
+            translate(
+                -46%,
+                -51%
+            )
+            rotate(2deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+.honmoon-hoshi-panicking {
+    animation:
+        honmoonHoshiPanicking
+        0.22s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes honmoonHoshiPanicking {
+
+    0% {
+        translate: 0 0;
+    }
+
+    50% {
+        translate: 2px -1px;
+    }
+
+    100% {
+        translate: 0 0;
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI — JUMP
+========================================================= */
+
+.honmoon-hoshi-jump {
+    animation:
+        honmoonHoshiJump
+        0.35s
+        ease-out;
+}
+
+
+@keyframes honmoonHoshiJump {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    45% {
+        transform:
+            translate(
+                -50%,
+                -78%
+            )
+            rotate(-8deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+/* =========================================================
+   BROKEN EMBLEM — MOTION
+========================================================= */
+
+.honmoon-broken-emblem {
+    position: absolute;
+
+    left: 50%;
+    top: 49%;
+
+    width:
+        clamp(
+            290px,
+            31vw,
+            570px
+        );
+
+    max-height: 72vh;
+
+    object-fit: contain;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    z-index: 34;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 0 18px
+            rgba(129, 94, 255, 0.4)
+        );
+}
+
+
+.honmoon-broken-emblem.show {
+    opacity: 1;
+}
+
+
+.honmoon-broken-emblem.cracked {
+    animation:
+        honmoonCrackShake
+        0.42s
+        ease-out;
+}
+
+
+@keyframes honmoonCrackShake {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(0deg);
+    }
+
+    20% {
+        transform:
+            translate(
+                -51%,
+                -50%
+            )
+            rotate(-1deg);
+    }
+
+    40% {
+        transform:
+            translate(
+                -49%,
+                -50%
+            )
+            rotate(1deg);
+    }
+
+    60% {
+        transform:
+            translate(
+                -51%,
+                -50%
+            )
+            rotate(-1deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(0deg);
+    }
+
+}
+
+
+/* =========================================================
+   BROKEN PIECE
+========================================================= */
+
+.honmoon-broken-piece {
+    position: absolute;
+
+    left: 60%;
+    top: 48%;
+
+    width:
+        clamp(
+            55px,
+            6vw,
+            105px
+        );
+
+    aspect-ratio: 1;
+
+    z-index: 38;
+
+    opacity: 0;
+
+    border-radius:
+        35% 65% 50% 45%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(68, 66, 73, 0.95),
+            rgba(66, 64, 66, 0.85)
+        );
+
+    box-shadow:
+        0 0 12px
+        rgba(86, 83, 90, 0.9),
+
+        0 0 28px
+        rgba(63, 60, 62, 0.5);
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(18deg);
+
+    transition:
+        top 0.35s ease,
+        left 0.35s ease,
+        opacity 0.2s ease,
+        transform 0.35s ease;
+}
+
+
+.honmoon-broken-piece.fall {
+    opacity: 1;
+
+    top: 70%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(135deg);
+}
+
+
+.honmoon-broken-piece.held {
+    opacity: 1;
+
+    left: 59%;
+    top: 51%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(12deg);
+}
+
+
+.honmoon-broken-piece.fall-again {
+    opacity: 1;
+
+    top: 72%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(190deg);
+}
+
+
+.honmoon-broken-piece.fall-final {
+    opacity: 1;
+
+    top: 76%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(240deg);
+}
+
+
+/* =========================================================
+   MOTION MIRA
+========================================================= */
+
+.honmoon-motion-mira {
+    position: absolute;
+
+    left: -20%;
+    top: 63%;
+
+    width:
+        clamp(
+            160px,
+            16vw,
+            280px
+        );
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    z-index: 40;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 8px 10px
+            rgba(0, 0, 0, 0.45)
+        );
+}
+
+
+.honmoon-motion-mira.show {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   GAMEPLAY LAYER
+========================================================= */
+
+.honmoon-game-layer {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 50;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.4s ease;
+}
+
+
+.honmoon-game-layer.show {
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   EMBLEM WRAP
+========================================================= */
+
+.honmoon-emblem-wrap {
+    position: absolute;
+
+    left: 50%;
+    top: 45%;
+
+    width:
+        clamp(
+            330px,
+            38vw,
+            650px
+        );
+
+    aspect-ratio: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    z-index: 52;
+}
+
+
+/* =========================================================
+   BROKEN BASE
+========================================================= */
+
+.honmoon-emblem-broken-base {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    opacity: 0.62;
+
+    filter:
+        grayscale(1)
+        brightness(0.8);
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   COLOR ZONES
+========================================================= */
+
+.honmoon-color-zones {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: auto;
+}
+
+
+.honmoon-color-zone {
+    position: absolute;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    padding: 0;
+
+    border: 0;
+
+    background:
+        rgba(175, 175, 185, 0.22);
+
+    opacity: 0.78;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease,
+        opacity 0.18s ease,
+        background 0.2s ease;
+}
+
+
+.honmoon-color-zone:hover {
+    opacity: 0.95;
+
+    filter:
+        brightness(1.2)
+        drop-shadow(
+            0 0 10px
+            rgba(255, 255, 255, 0.5)
+        );
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1.035);
+}
+
+
+.honmoon-color-zone.painted {
+    opacity: 0.9;
+
+    filter:
+        saturate(1.2)
+        brightness(1.1)
+        drop-shadow(
+            0 0 8px
+            rgba(255, 255, 255, 0.45)
+        );
+}
+
+
+.honmoon-color-zone.paint-pop {
+    animation:
+        honmoonPaintPop
+        0.35s
+        ease-out;
+}
+
+
+@keyframes honmoonPaintPop {
+
+    0% {
+        scale: 1;
+    }
+
+    45% {
+        scale: 1.13;
+    }
+
+    100% {
+        scale: 1;
+    }
+
+}
+
+
+/* =========================================================
+   LINEART
+========================================================= */
+
+.honmoon-emblem-lineart {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    z-index: 4;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 0 5px
+            rgba(255, 255, 255, 0.25)
+        );
+}
+
+
+/* =========================================================
+   RESTORED GLOW
+========================================================= */
+
+.honmoon-restored-glow {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    width: 108%;
+    aspect-ratio: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.8);
+
+    z-index: 0;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.28) 0%,
+            rgba(255, 219, 104, 0.22) 22%,
+            rgba(194, 100, 255, 0.22) 48%,
+            rgba(98, 192, 255, 0.12) 65%,
+            rgba(100, 100, 255, 0) 76%
+        );
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+}
+
+
+.honmoon-restored-glow.show {
+    opacity: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+}
+
+
+.honmoon-restored-glow.pulse {
+    animation:
+        honmoonGlowPulse
+        0.9s
+        ease-in-out
+        2;
+}
+
+
+@keyframes honmoonGlowPulse {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+
+        opacity: 1;
+    }
+
+    50% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1.12);
+
+        opacity: 0.7;
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+
+        opacity: 1;
+    }
+
+}
+
+
+/* =========================================================
+   RESTORED EMBLEM
+========================================================= */
+
+.honmoon-emblem-wrap.restored {
+    animation:
+        honmoonRestored
+        1.3s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes honmoonRestored {
+
+    from {
+        filter:
+            drop-shadow(
+                0 0 8px
+                rgba(255, 221, 113, 0.45)
+            );
+    }
+
+    to {
+        filter:
+            drop-shadow(
+                0 0 18px
+                rgba(255, 221, 113, 0.8)
+            )
+
+            drop-shadow(
+                0 0 28px
+                rgba(173, 92, 255, 0.65)
+            );
+    }
+
+}
+
+
+/* =========================================================
+   PALETTE
+========================================================= */
+
+.honmoon-palette {
+    position: absolute;
+
+    left: 50%;
+    bottom: 4%;
+
+    display: flex;
+
+    gap:
+        clamp(
+            12px,
+            1.5vw,
+            24px
+        );
+
+    align-items: center;
+
+    justify-content: center;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 65;
+
+    padding:
+        13px
+        20px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(18, 11, 42, 0.8);
+
+    box-shadow:
+        0 0 20px
+        rgba(132, 89, 255, 0.3);
+
+    backdrop-filter:
+        blur(6px);
+}
+
+
+/* =========================================================
+   COLOR BUTTON
+========================================================= */
+
+.honmoon-color-btn {
+    position: relative;
+
+    width:
+        clamp(
+            50px,
+            5vw,
+            78px
+        );
+
+    aspect-ratio: 1;
+
+    padding: 6px;
+
+    border:
+        3px solid
+        rgba(255, 255, 255, 0.24);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.honmoon-color-dot {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    background:
+        var(--color-value);
+
+    box-shadow:
+        inset 0 0 12px
+        rgba(255, 255, 255, 0.32),
+
+        0 0 10px
+        color-mix(
+            in srgb,
+            var(--color-value) 60%,
+            transparent
+        );
+}
+
+
+.honmoon-color-btn:hover {
+    transform:
+        scale(1.1);
+}
+
+
+.honmoon-color-btn.selected {
+    transform:
+        scale(1.16);
+
+    border-color:
+        #ffffff;
+
+    box-shadow:
+        0 0 8px
+        rgba(255, 255, 255, 0.9),
+
+        0 0 20px
+        var(--color-value);
+}
+
+
+/* =========================================================
+   READY BUTTON
+========================================================= */
+
+.honmoon-ready-btn {
+    position: absolute;
+
+    right: 4%;
+    bottom: 7%;
+
+    min-width:
+        clamp(
+            150px,
+            15vw,
+            240px
+        );
+
+    padding:
+        15px
+        26px;
+
+    border:
+        2px solid
+        rgba(255, 244, 178, 0.85);
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(116, 69, 218, 0.96),
+            rgba(222, 86, 187, 0.96)
+        );
+
+    color:
+        #ffffff;
+
+    font-size:
+        clamp(
+            20px,
+            2vw,
+            30px
+        );
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    z-index: 70;
+
+    opacity: 0;
+
+    transform:
+        translateY(25px)
+        scale(0.88);
+
+    pointer-events: none;
+
+    box-shadow:
+        0 0 16px
+        rgba(255, 126, 224, 0.55),
+
+        0 0 30px
+        rgba(117, 82, 255, 0.4);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+.honmoon-ready-btn.show {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    pointer-events: auto;
+
+    animation:
+        honmoonReadyPulse
+        1s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+.honmoon-ready-btn:hover {
+    transform:
+        scale(1.06);
+}
+
+
+@keyframes honmoonReadyPulse {
+
+    from {
+        box-shadow:
+            0 0 14px
+            rgba(255, 126, 224, 0.45),
+
+            0 0 24px
+            rgba(117, 82, 255, 0.3);
+    }
+
+    to {
+        box-shadow:
+            0 0 22px
+            rgba(255, 149, 228, 0.85),
+
+            0 0 42px
+            rgba(117, 82, 255, 0.65);
+    }
+
+}
+
+
+/* =========================================================
+   THIRD STAR
+========================================================= */
+
+.honmoon-third-star {
+    position: absolute;
+
+    left: 50%;
+    top: 45%;
+
+    width:
+        clamp(
+            70px,
+            7vw,
+            125px
+        );
+
+    aspect-ratio: 1;
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    z-index: 100;
+
+    opacity: 0;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.3);
+
+    pointer-events: none;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.45s ease;
+}
+
+
+.honmoon-third-star img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(255, 246, 159, 1)
+        )
+
+        drop-shadow(
+            0 0 24px
+            rgba(255, 210, 73, 0.9)
+        )
+
+        drop-shadow(
+            0 0 40px
+            rgba(211, 105, 255, 0.6)
+        );
+}
+
+
+.honmoon-third-star.show {
+    opacity: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+}
+
+
+.honmoon-third-star.ready {
+    pointer-events: auto;
+
+    animation:
+        honmoonThirdStarReady
+        0.75s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes honmoonThirdStarReady {
+
+    from {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.95);
+    }
+
+    to {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1.12);
+    }
+
+}
+
+
+.honmoon-third-star.collect {
+    pointer-events: none;
+
+    animation:
+        honmoonThirdStarCollect
+        0.55s
+        ease-in
+        forwards;
+}
+
+
+@keyframes honmoonThirdStarCollect {
+
+    0% {
+        left: 50%;
+        top: 45%;
+
+        opacity: 1;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+    55% {
+        opacity: 1;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1.2);
+    }
+
+    100% {
+        left: 91%;
+        top: 7%;
+
+        opacity: 0;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.25);
+    }
+
+}
+
+
+.honmoon-third-star.hidden {
+    display: none;
+}
+
+
+/* =========================================================
+   HOSHI ENDING
+========================================================= */
+
+.honmoon-hoshi-ending {
+    position: absolute;
+
+    left: -13%;
+    bottom: 2%;
+
+    width:
+        clamp(
+            145px,
+            15vw,
+            270px
+        );
+
+    z-index: 75;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform:
+        translateX(30%);
+
+    transition:
+        right 0.6s ease,
+        bottom 0.6s ease,
+        transform 0.5s ease,
+        opacity 0.4s ease;
+}
+
+
+.honmoon-ending-hoshi {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 8px 12px
+            rgba(0, 0, 0, 0.45)
+        );
+}
+
+
+.honmoon-hoshi-ending.show {
+    left: 1%;
+
+    opacity: 1;
+
+    transform:
+        translateX(0);
+}
+
+
+/* Подходит посмотреть поближе */
+
+.honmoon-hoshi-ending.come-closer {
+    left: 16%;
+    bottom: 6%;
+
+    transform:
+        scale(1.05);
+}
+
+
+/* Тянется / трогает */
+
+.honmoon-hoshi-ending.touch {
+   left: 22%;
+    bottom: 8%;
+
+    transform:
+        scale(1.08)
+        rotate(-2deg);
+}
+
+
+/* Ему нравится */
+
+.honmoon-hoshi-ending.happy {
+    animation:
+        honmoonHoshiHappy
+        0.8s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes honmoonHoshiHappy {
+
+    from {
+        transform:
+            translateY(0)
+            scale(1.06);
+    }
+
+    to {
+        transform:
+            translateY(-5px)
+            scale(1.09);
+    }
+
+}
+
+
+/* Мира сказала "Хоши." */
+
+.honmoon-hoshi-ending.startled {
+    animation:
+        honmoonEndingStartled
+        0.35s
+        ease-out;
+}
+
+
+@keyframes honmoonEndingStartled {
+
+    0% {
+        transform:
+            scale(1);
+    }
+
+    45% {
+        transform:
+            translateY(-24px)
+            rotate(-8deg)
+            scale(1.09);
+    }
+
+    100% {
+        transform:
+            scale(1);
+    }
+
+}
+
+
+/* Убегает */
+
+.honmoon-hoshi-ending.run-away {
+    right: -25%;
+
+    bottom: 4%;
+
+    opacity: 0;
+
+    transform:
+        rotate(10deg)
+        scale(0.9);
+
+    transition:
+        right 0.65s linear,
+        opacity 0.45s ease,
+        transform 0.65s ease;
+}
+
+
+/* =========================================================
+   SMALL SCREEN
+========================================================= */
+
+@media (
+    max-width: 900px
+) {
+
+    .honmoon-emblem-wrap {
+        width:
+            clamp(
+                300px,
+                48vw,
+                520px
+            );
+    }
+
+
+    .honmoon-palette {
+        bottom: 3%;
+    }
+
+
+    .honmoon-ready-btn {
+        right: 2%;
+        bottom: 14%;
+    }
+
+
+    .honmoon-speaker {
+        width:
+            clamp(
+                180px,
+                25vw,
+                300px
+            );
+    }
+
+}
+
+
+/* Новая полученная звезда красиво появляется */
+
+.game-star-hud-star.active {
+    animation:
+        gameHudStarAppear
+        0.5s
+        ease-out;
+}
+
+
+@keyframes gameHudStarAppear {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            scale(0.15)
+            rotate(-20deg);
+    }
+
+    60% {
+        opacity: 1;
+
+        transform:
+            scale(1.2)
+            rotate(7deg);
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(0deg);
+    }
+
+}
+
+
+
+
+/* =========================================================
+   ANIMATED STAR (fly to panel)
+========================================================= */
+
+.animated-star {
+    position: fixed;
+    z-index: 1000;
+    pointer-events: none;
+    width: clamp(80px, 10vw, 160px);
+    aspect-ratio: 1;
+    object-fit: contain;
+    opacity: 0;
+    transform: scale(0.3) translate(-50%, -50%);
+    filter: 
+        drop-shadow(0 0 20px rgba(255, 236, 160, 1))
+        drop-shadow(0 0 40px rgba(255, 196, 75, 0.8));
+}
+
+.animated-star.animate {
+    animation: starFlyToPanel 2s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+@keyframes starFlyToPanel {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) translate(-50%, -50%) rotate(-20deg);
+    }
+    15% {
+        opacity: 1;
+        transform: scale(1.5) translate(-50%, -50%) rotate(10deg);
+    }
+    35% {
+        transform: scale(1.1) translate(-50%, -50%) rotate(-5deg);
+    }
+    55% {
+        opacity: 1;
+        transform: scale(0.9) translate(calc(-50% + var(--fly-x)), calc(-50% + var(--fly-y))) rotate(15deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.4) translate(calc(-50% + var(--fly-x)), calc(-50% + var(--fly-y))) rotate(30deg);
+    }
+}
+
+/* =========================================================
+   ЕДИНЫЙ СТИЛЬ ДЛЯ HUD (ВСЕ СЦЕНЫ)
+========================================================= */
+
+.game-star-hud {
+    position: absolute;
+    right: 20px;
+    top: -50px;
+    width: clamp(300px, 32vw, 540px) !important;
+    pointer-events: none;
+    user-select: none;
+    z-index: 60;
+}
+
+.game-star-hud-panel {
+    display: block;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+    pointer-events: none;
+    filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.4));
+}
+
+.game-star-hud-stars {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 51%;                /* ← поднимите здесь (было 50%) */
+    transform: translateY(-56%); /* ← и здесь (было -50%) */
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    padding: 0 7%;
+    z-index: 2;
+}
+
+.game-star-hud-star {
+    display: block;
+    width: 160%;
+    height: auto;
+    max-width: 78px;          /* ← основной размер звезды */
+    aspect-ratio: 1;
+    object-fit: contain;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.3s ease, transform 0.35s ease;
+}
+
+.game-star-hud-star.active {
+    opacity: 1;
+    transform: scale(1);
+    animation: starAppearOnPanel 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes starAppearOnPanel {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(-30deg);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1.4) rotate(10deg);
+    }
+    70% {
+        transform: scale(0.9) rotate(-5deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+/* =========================
+   FIX: HUD в пазле как в citySearch
+========================= */
+
+.puzzle-topbar {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: flex-end !important;  /* прижимаем HUD к правому краю */
+    gap: 20px !important;
+    padding: 0 20px !important;
+    height: auto !important;              /* убираем фиксированную высоту */
+    min-height: 76px !important;
+    box-sizing: border-box !important;
+}
+
+/* Сам HUD – занимает фиксированную ширину, как в citySearch */
+.puzzle-scene .game-star-hud {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    width: clamp(260px, 28vw, 470px) !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;                  /* убираем все margin */
+    pointer-events: none !important;
+    z-index: 60 !important;
+    margin-top: -40px !important;
+}
+
+/* Сетка звёзд – те же отступы, что в citySearch */
+.puzzle-scene .game-star-hud-stars {
+    padding: 0 11% !important;
+    top: 50% !important;
+    transform: translateY(-60%) !important;
+    gap: 2px !important; 
+}
+
+/* Размер звёзд – такой же, как в citySearch */
+.puzzle-scene .game-star-hud-star {
+    width: 100% !important;
+    max-width: none !important;          /* убираем ограничение */
+    height: auto !important;
+    transform: scale(1.6) !important;    /* увеличиваем в 1.5 раза */
+    transform-origin: center !important;
+}
+#honmoonRumi {
+    width: clamp(300px, 32vw, 550px);
+}
+

@@ -1,0 +1,2205 @@
+/* =========================================================
+   SCENE 06 — THREE MAGICAL SEALS
+========================================================= */
+
+
+/* =========================================================
+   BASE
+========================================================= */
+
+.seals-scene {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background:
+        #100923;
+}
+
+
+.seals-bg {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    user-select: none;
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.seals-topbar {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+
+    padding:
+        22px
+        28px;
+
+    z-index: 150;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.3s ease;
+}
+
+
+.seals-topbar.show {
+    opacity: 1;
+}
+
+
+.seals-subtitle {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    max-width: min(40.6vw, 546px);
+    min-height: 38px;
+    padding: 8px 13px;
+    border-radius: 18px;
+    background: rgba(21, 15, 47, 0.74);
+    border: 2px solid rgba(255, 225, 122, 0.72);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.26), 0 0 22px rgba(153,102,255,0.24);
+    color: #fff9df;
+    font-size: clamp(12.6px, 1.4vw, 21px);
+    font-weight: 800;
+    line-height: 1.18;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.55);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 70;
+    pointer-events: none;
+}
+.seals-topbar.show .seals-subtitle {
+    opacity: 1;
+}
+
+
+.seals-star-hud-mount {
+    flex-shrink: 0;
+
+    display: flex;
+
+    justify-content: flex-end;
+}
+
+
+/* =========================================================
+   SPEAKERS
+========================================================= */
+
+.seals-speaker {
+    position: absolute;
+
+    bottom: -4%;
+
+    width:
+        clamp(
+            220px,
+            23vw,
+            410px
+        );
+
+    max-height: 82vh;
+
+    object-fit: contain;
+
+    z-index: 160;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        transform 0.28s ease,
+        opacity 0.22s ease;
+}
+
+
+.seals-speaker-left {
+    left: 0;
+
+    transform:
+        translateX(-105%);
+}
+
+
+.seals-speaker-right {
+    right: 0;
+
+    transform:
+        translateX(105%);
+}
+
+
+.seals-speaker-left.show {
+    opacity: 1;
+
+    transform:
+        translateX(-8%);
+}
+
+
+.seals-speaker-right.show {
+    opacity: 1;
+
+    transform:
+        translateX(8%);
+}
+
+
+.seals-speaker.character-speaking,
+.seals-runner.character-speaking {
+    animation:
+        sealsCharacterSpeaking
+        0.22s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes sealsCharacterSpeaking {
+
+    0% {
+        translate: 0 0;
+    }
+
+    30% {
+        translate: 0 -1px;
+    }
+
+    60% {
+        translate: 0 0;
+    }
+
+    80% {
+        translate: 0 -0.5px;
+    }
+
+    100% {
+        translate: 0 0;
+    }
+
+}
+
+
+/* =========================================================
+   MOTION INTRO
+========================================================= */
+
+.seals-motion-layer {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 30;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.35s ease;
+}
+
+
+.seals-motion-layer.show {
+    opacity: 1;
+}
+
+
+.seals-motion-layer.finished {
+    opacity: 0;
+}
+
+
+/* =========================================================
+   MOTION HOSHI
+========================================================= */
+
+.seals-motion-hoshi {
+    position: absolute;
+
+    left: -15%;
+    top: 63%;
+
+    width:
+        clamp(
+            135px,
+            14vw,
+            245px
+        );
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    z-index: 55;
+
+    opacity: 0;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 8px 12px
+            rgba(0, 0, 0, 0.5)
+        );
+}
+
+
+.seals-motion-hoshi.show {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   HOSHI — CONFUSED AT DOOR
+========================================================= */
+
+.seals-motion-hoshi.door-confused {
+    animation:
+        sealsDoorConfused
+        0.65s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes sealsDoorConfused {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(0deg);
+    }
+
+    50% {
+        transform:
+            translate(
+                -50%,
+                -53%
+            )
+            rotate(-4deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(0deg);
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI — POKES LOCK
+========================================================= */
+
+.seals-motion-hoshi.poke-lock {
+    animation:
+        sealsPokeLock
+        0.3s
+        ease-in-out;
+}
+
+
+.seals-motion-hoshi.poke-lock-again {
+    animation:
+        sealsPokeLockAgain
+        0.35s
+        ease-in-out;
+}
+
+
+@keyframes sealsPokeLock {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    60% {
+        transform:
+            translate(
+                -40%,
+                -50%
+            )
+            rotate(5deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+@keyframes sealsPokeLockAgain {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    55% {
+        transform:
+            translate(
+                -38%,
+                -48%
+            )
+            rotate(7deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+/* =========================================================
+   ZAPPED
+========================================================= */
+
+.seals-motion-hoshi.zapped {
+    animation:
+        sealsHoshiZapped
+        0.5s
+        ease-out;
+}
+
+
+.seals-motion-hoshi.zapped-hard {
+    animation:
+        sealsHoshiZappedHard
+        0.55s
+        ease-out;
+}
+
+
+@keyframes sealsHoshiZapped {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+    40% {
+        transform:
+            translate(
+                -54%,
+                -68%
+            )
+            scale(1.1)
+            rotate(-7deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+}
+
+
+@keyframes sealsHoshiZappedHard {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+    30% {
+        transform:
+            translate(
+                -58%,
+                -72%
+            )
+            scale(1.14)
+            rotate(-10deg);
+    }
+
+    55% {
+        transform:
+            translate(
+                -45%,
+                -64%
+            )
+            rotate(7deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   OFFENDED
+========================================================= */
+
+.seals-motion-hoshi.offended {
+    animation:
+        sealsHoshiOffended
+        0.45s
+        ease-in-out;
+}
+
+
+@keyframes sealsHoshiOffended {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    50% {
+        transform:
+            translate(
+                -50%,
+                -48%
+            )
+            rotate(5deg);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+/* =========================================================
+   NOTICES GAP
+========================================================= */
+
+.seals-motion-hoshi.notices-gap {
+    animation:
+        sealsNoticesGap
+        0.45s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes sealsNoticesGap {
+
+    from {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            rotate(-2deg);
+    }
+
+    to {
+        transform:
+            translate(
+                -50%,
+                -52%
+            )
+            rotate(4deg);
+    }
+
+}
+
+
+/* =========================================================
+   HORNS STUCK
+========================================================= */
+
+.seals-motion-hoshi.horns-stuck {
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(4deg);
+}
+
+
+.seals-motion-hoshi.struggle {
+    animation:
+        sealsHornsStruggle
+        0.22s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes sealsHornsStruggle {
+
+    0% {
+        translate: 0 0;
+    }
+
+    25% {
+        translate: -5px 0;
+    }
+
+    50% {
+        translate: 5px -2px;
+    }
+
+    75% {
+        translate: -4px 1px;
+    }
+
+    100% {
+        translate: 0 0;
+    }
+
+}
+
+
+/* =========================================================
+   BREAK FREE
+========================================================= */
+
+.seals-motion-hoshi.break-free {
+    animation:
+        sealsBreakFree
+        0.45s
+        ease-out;
+}
+
+
+@keyframes sealsBreakFree {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    45% {
+        transform:
+            translate(
+                -62%,
+                -75%
+            )
+            rotate(-12deg)
+            scale(1.08);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+}
+
+
+/* =========================================================
+   SEES LOST STAR
+========================================================= */
+
+.seals-motion-hoshi.sees-lost-star {
+    animation:
+        sealsSeesLostStar
+        0.5s
+        ease-out;
+}
+
+
+@keyframes sealsSeesLostStar {
+
+    0% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+    50% {
+        transform:
+            translate(
+                -50%,
+                -62%
+            )
+            scale(1.1);
+    }
+
+    100% {
+        transform:
+            translate(
+                -50%,
+                -50%
+            );
+    }
+
+}
+
+
+/* =========================================================
+   MOTION MIRA
+========================================================= */
+
+.seals-motion-mira {
+    position: absolute;
+
+    left: -20%;
+    top: 64%;
+
+    width:
+        clamp(
+            160px,
+            16vw,
+            280px
+        );
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    z-index: 50;
+
+    opacity: 0;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 8px 10px
+            rgba(0, 0, 0, 0.45)
+        );
+}
+
+
+.seals-motion-mira.show {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   MOTION DOOR LOCKS
+========================================================= */
+
+.seals-door-locks {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 40;
+
+    pointer-events: none;
+}
+
+
+.seals-door-lock {
+    position: absolute;
+
+    width:
+        clamp(
+            100px,
+            9.5vw,
+            165px
+        );
+
+    opacity: 0;
+
+    object-fit: contain;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.7);
+
+    filter:
+        drop-shadow(
+            0 0 12px
+            rgba(140, 98, 255, 0.7)
+        );
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.35s ease;
+}
+
+
+.seals-door-lock.show {
+    opacity: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+}
+
+
+.seals-door-lock-1 {
+    left: 31.5%;
+    top: 42.5%;
+}
+
+
+.seals-door-lock-2 {
+    left: 50%;
+    top: 42.5%;
+}
+
+
+.seals-door-lock-3 {
+    left: 68.5%;
+    top: 42.5%;
+}
+
+
+/* =========================================================
+   LOCK ZAP
+========================================================= */
+
+.seals-door-lock.zap {
+    animation:
+        sealsLockZap
+        0.45s
+        ease-out;
+}
+
+
+@keyframes sealsLockZap {
+
+    0% {
+        filter:
+            drop-shadow(
+                0 0 10px
+                rgba(140, 98, 255, 0.7)
+            );
+    }
+
+    40% {
+        filter:
+            brightness(2.1)
+
+            drop-shadow(
+                0 0 14px
+                rgba(255, 255, 255, 1)
+            )
+
+            drop-shadow(
+                0 0 30px
+                rgba(115, 206, 255, 1)
+            );
+    }
+
+    100% {
+        filter:
+            drop-shadow(
+                0 0 10px
+                rgba(140, 98, 255, 0.7)
+            );
+    }
+
+}
+
+
+/* =========================================================
+   DROPPED STAR
+========================================================= */
+
+.seals-dropped-star {
+    position: absolute;
+
+    left: 50%;
+    top: 48%;
+
+    width:
+        clamp(
+            55px,
+            6vw,
+            100px
+        );
+
+    z-index: 42;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.4);
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(255, 245, 148, 1)
+        )
+
+        drop-shadow(
+            0 0 24px
+            rgba(255, 202, 70, 0.8)
+        );
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.5s ease,
+        top 0.55s ease;
+}
+
+
+.seals-dropped-star.show {
+    opacity: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+}
+
+
+.seals-dropped-star.fall-behind {
+    top: 72%;
+
+    opacity: 0.25;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        rotate(145deg)
+        scale(0.5);
+}
+
+
+/* =========================================================
+   GAMEPLAY LAYER
+========================================================= */
+
+.seals-game-layer {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 35;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.4s ease;
+}
+
+
+.seals-game-layer.show {
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   GAME LOCKS
+========================================================= */
+
+.seals-game-locks {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 45;
+
+    pointer-events: none;
+}
+
+
+.seals-game-lock {
+    position: absolute;
+
+    width: clamp(
+            100px,
+            9.5vw,
+            165px
+        );
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(129, 89, 255, 0.7)
+        );
+
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease,
+        opacity 0.3s ease;
+}
+
+
+.seals-game-lock img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    pointer-events: none;
+}
+
+
+.seals-game-lock-1 {
+    left: 31.5%;
+    top: 42.5%;
+}
+
+
+.seals-game-lock-2 {
+    left: 50%;
+    top: 42.5%;
+}
+
+
+.seals-game-lock-3 {
+    left: 68.5%;
+    top: 42.5%;
+}
+
+
+/* =========================================================
+   OPENED LOCK
+========================================================= */
+
+.seals-game-lock.opened {
+    filter:
+        brightness(1.3)
+
+        drop-shadow(
+            0 0 12px
+            rgba(255, 236, 121, 0.95)
+        )
+
+        drop-shadow(
+            0 0 28px
+            rgba(167, 91, 255, 0.8)
+        );
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1.08);
+}
+
+
+.seals-game-lock.final-glow {
+    animation:
+        sealsFinalGlow
+        0.75s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes sealsFinalGlow {
+
+    from {
+        filter:
+            brightness(1.15)
+
+            drop-shadow(
+                0 0 10px
+                rgba(255, 230, 100, 0.7)
+            );
+    }
+
+    to {
+        filter:
+            brightness(1.7)
+
+            drop-shadow(
+                0 0 18px
+                rgba(255, 247, 164, 1)
+            )
+
+            drop-shadow(
+                0 0 34px
+                rgba(173, 94, 255, 0.95)
+            );
+    }
+
+}
+
+
+/* =========================================================
+   PUZZLE PANEL
+========================================================= */
+
+.seals-puzzle-panel {
+    position: absolute;
+
+    left: 23%;
+    top: 75%;
+
+    width:
+        clamp(
+            370px,
+            38vw,
+            660px
+        );
+
+    min-height:
+        clamp(
+            280px,
+            33vh,
+            430px
+        );
+
+    box-sizing: border-box;
+
+    padding:
+        clamp(
+            22px,
+            2.5vw,
+            38px
+        );
+
+    border:
+        2px solid
+        rgba(217, 191, 255, 0.7);
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25, 13, 56, 0.92),
+            rgba(48, 18, 79, 0.86)
+        );
+
+    box-shadow:
+        0 0 20px
+        rgba(123, 87, 255, 0.35),
+
+        inset 0 0 28px
+        rgba(255, 255, 255, 0.05);
+
+    backdrop-filter:
+        blur(8px);
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.92);
+
+    opacity: 0;
+
+    z-index: 75;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+.seals-puzzle-panel.show {
+    opacity: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   QUESTION AREA
+========================================================= */
+
+.seals-question {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height:
+        clamp(
+            120px,
+            16vh,
+            190px
+        );
+
+    margin-bottom:
+        clamp(
+            18px,
+            2.5vh,
+            30px
+        );
+}
+
+
+/* =========================================================
+   NUMBER SEQUENCE
+========================================================= */
+
+.seals-number-sequence {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap:
+        clamp(
+            12px,
+            1.6vw,
+            26px
+        );
+}
+
+
+.seals-sequence-cell {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width:
+        clamp(
+            65px,
+            6.5vw,
+            105px
+        );
+
+    aspect-ratio: 1;
+
+    border-radius: 22px;
+
+    background:
+        rgba(255, 255, 255, 0.09);
+
+    border:
+        2px solid
+        rgba(222, 200, 255, 0.38);
+
+    color:
+        #ffffff;
+
+    font-size:
+        clamp(
+            38px,
+            4vw,
+            70px
+        );
+
+    font-weight: 900;
+
+    text-shadow:
+        0 0 12px
+        rgba(170, 116, 255, 0.75);
+}
+
+
+/* =========================================================
+   WORD QUESTION
+========================================================= */
+
+.seals-word-question {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap:
+        clamp(
+            24px,
+            3vw,
+            48px
+        );
+}
+
+
+.seals-word-cat {
+    width:
+        clamp(
+            105px,
+            11vw,
+            185px
+        );
+
+    max-height: 160px;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 0 12px
+            rgba(190, 125, 255, 0.55)
+        );
+}
+
+
+.seals-word-text {
+    color:
+        #ffffff;
+
+    font-size:
+        clamp(
+            52px,
+            6vw,
+            96px
+        );
+
+    font-weight: 900;
+
+    letter-spacing:
+        0.08em;
+
+    text-shadow:
+        0 0 12px
+        rgba(170, 116, 255, 0.8);
+}
+
+
+/* =========================================================
+   PATTERN QUESTION
+========================================================= */
+
+.seals-pattern-sequence {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap:
+        clamp(
+            8px,
+            1.1vw,
+            17px
+        );
+}
+
+
+.seals-pattern-cell {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width:
+        clamp(
+            52px,
+            5.2vw,
+            86px
+        );
+
+    aspect-ratio: 1;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.07);
+
+    color:
+        #ffffff;
+
+    font-size:
+        clamp(
+            36px,
+            4vw,
+            66px
+        );
+
+    font-weight: 900;
+}
+
+
+.seals-pattern-cell img {
+    display: block;
+
+    width: 76%;
+    height: 76%;
+
+    object-fit: contain;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   OPTIONS
+========================================================= */
+
+.seals-options {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    gap:
+        clamp(
+            14px,
+            1.8vw,
+            28px
+        );
+
+    align-items: center;
+}
+
+
+/* =========================================================
+   OPTION BUTTON
+========================================================= */
+
+.seals-option-btn {
+    min-height:
+        clamp(
+            80px,
+            10vh,
+            120px
+        );
+
+    padding:
+        12px;
+
+    border:
+        2px solid
+        rgba(231, 211, 255, 0.55);
+
+    border-radius: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(102, 65, 177, 0.72),
+            rgba(62, 40, 128, 0.78)
+        );
+
+    color:
+        #ffffff;
+
+    font-size:
+        clamp(
+            38px,
+            4vw,
+            68px
+        );
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 14px
+        rgba(0, 0, 0, 0.28);
+
+    transition:
+        transform 0.18s ease,
+        filter 0.18s ease,
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+.seals-option-btn:hover {
+    transform:
+        translateY(-4px)
+        scale(1.035);
+
+    filter:
+        brightness(1.12);
+
+    border-color:
+        rgba(255, 242, 178, 0.9);
+
+    box-shadow:
+        0 8px 18px
+        rgba(0, 0, 0, 0.32),
+
+        0 0 18px
+        rgba(181, 112, 255, 0.45);
+}
+
+
+.seals-option-btn img {
+    display: block;
+
+    margin:
+        0 auto;
+
+    width:
+        clamp(
+            62px,
+            7vw,
+            105px
+        );
+
+    max-height: 95px;
+
+    object-fit: contain;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   WRONG ANSWER
+
+   НИКАКИХ КРАСНЫХ X
+========================================================= */
+
+.seals-option-btn.wrong {
+    animation:
+        sealsWrongAnswer
+        0.32s
+        ease-out;
+}
+
+
+@keyframes sealsWrongAnswer {
+
+    0% {
+        transform:
+            translateX(0);
+    }
+
+    25% {
+        transform:
+            translateX(-8px);
+    }
+
+    50% {
+        transform:
+            translateX(8px);
+    }
+
+    75% {
+        transform:
+            translateX(-4px);
+    }
+
+    100% {
+        transform:
+            translateX(0);
+    }
+
+}
+
+
+/* =========================================================
+   CORRECT ANSWER
+========================================================= */
+
+.seals-option-btn.correct {
+    pointer-events: none;
+
+    animation:
+        sealsCorrectAnswer
+        0.55s
+        ease-out
+        forwards;
+}
+
+
+@keyframes sealsCorrectAnswer {
+
+    0% {
+        transform:
+            scale(1);
+    }
+
+    45% {
+        transform:
+            scale(1.12);
+
+        filter:
+            brightness(1.5);
+
+        box-shadow:
+            0 0 18px
+            rgba(255, 240, 144, 0.9),
+
+            0 0 35px
+            rgba(163, 98, 255, 0.8);
+    }
+
+    100% {
+        transform:
+            scale(1.02);
+    }
+
+}
+
+
+/* =========================================================
+   DOOR OPEN EFFECT
+========================================================= */
+
+.seals-door-open-effect {
+    position: absolute;
+
+    left: 55%;
+    top: 50%;
+
+    width:
+        clamp(
+            280px,
+            34vw,
+            590px
+        );
+
+    aspect-ratio: 0.72;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.7);
+
+    border-radius: 45%;
+
+    z-index: 35;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(255, 255, 255, 0.72) 0%,
+            rgba(255, 226, 126, 0.43) 25%,
+            rgba(176, 103, 255, 0.28) 52%,
+            rgba(101, 159, 255, 0.12) 67%,
+            rgba(100, 100, 255, 0) 78%
+        );
+
+    transition:
+        opacity 0.6s ease,
+        transform 0.8s ease;
+}
+
+
+.seals-door-open-effect.show {
+    opacity: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+}
+
+
+/* Когда дверь открылась */
+
+.seals-game-layer.door-open
+.seals-game-locks {
+    opacity: 0;
+
+    transition:
+        opacity 0.45s ease;
+}
+
+
+/* =========================================================
+   FIFTH STAR
+========================================================= */
+
+.seals-fifth-star {
+    position: absolute;
+
+    left: 58%;
+    top: 37%;
+
+    width:
+        clamp(
+            75px,
+            8vw,
+            135px
+        );
+
+    aspect-ratio: 1;
+
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+
+    z-index: 105;
+
+    opacity: 0;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(0.25);
+
+    pointer-events: none;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.45s ease;
+}
+
+
+.seals-fifth-star img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    pointer-events: none;
+
+    filter:
+        drop-shadow(
+            0 0 10px
+            rgba(255, 248, 166, 1)
+        )
+
+        drop-shadow(
+            0 0 24px
+            rgba(255, 205, 64, 0.92)
+        )
+
+        drop-shadow(
+            0 0 40px
+            rgba(190, 94, 255, 0.62)
+        );
+}
+
+
+.seals-fifth-star.show {
+    opacity: 1;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        )
+        scale(1);
+}
+
+
+.seals-fifth-star.ready {
+    pointer-events: auto;
+
+    animation:
+        sealsFifthStarReady
+        0.7s
+        ease-in-out
+        infinite
+        alternate;
+}
+
+
+@keyframes sealsFifthStarReady {
+
+    from {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.94);
+    }
+
+    to {
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1.12);
+    }
+
+}
+
+
+/* =========================================================
+   STAR COLLECTION
+========================================================= */
+
+.seals-fifth-star.collect {
+    pointer-events: none;
+
+    animation:
+        sealsFifthStarCollect
+        0.55s
+        ease-in
+        forwards;
+}
+
+
+@keyframes sealsFifthStarCollect {
+
+    0% {
+        left: 58%;
+        top: 37%;
+
+        opacity: 1;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1);
+    }
+
+    55% {
+        opacity: 1;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(1.22);
+    }
+
+    100% {
+        left: 89%;
+        top: 8%;
+
+        opacity: 0;
+
+        transform:
+            translate(
+                -50%,
+                -50%
+            )
+            scale(0.2);
+    }
+
+}
+
+
+.seals-fifth-star.hidden {
+    display: none;
+}
+
+
+/* =========================================================
+   HOSHI ENDING — ON BEAM
+========================================================= */
+
+.seals-hoshi-ending {
+    position: absolute;
+
+    left: 45%;
+    top: -18%;
+
+    width:
+        clamp(
+            125px,
+            13vw,
+            230px
+        );
+
+    z-index: 115;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transform:
+        rotate(4deg);
+
+    transition:
+        top 0.55s ease,
+        right 0.55s ease,
+        opacity 0.4s ease,
+        transform 0.4s ease;
+}
+
+
+.seals-hoshi-ending.show {
+    top: 7%;
+
+    opacity: 1;
+}
+
+
+.seals-ending-hoshi {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 8px 12px
+            rgba(0, 0, 0, 0.5)
+        );
+}
+
+
+/* =========================================================
+   TWO STARS WITH HOSHI
+========================================================= */
+
+.seals-ending-stars {
+    position: absolute;
+
+    left: 8%;
+    bottom: 8%;
+
+    width: 84%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    opacity: 0;
+
+    transform:
+        translateY(10px)
+        scale(0.8);
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+
+.seals-ending-stars img {
+    width: 36%;
+
+    height: auto;
+
+    object-fit: contain;
+
+    filter:
+        drop-shadow(
+            0 0 8px
+            rgba(255, 233, 99, 0.95)
+        );
+}
+
+
+.seals-hoshi-ending.show-stars
+.seals-ending-stars {
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* =========================================================
+   HOSHI REFUSES 😂
+========================================================= */
+
+.seals-hoshi-ending.refuse {
+    animation:
+        sealsHoshiRefuse
+        0.35s
+        ease-in-out
+        2;
+}
+
+
+@keyframes sealsHoshiRefuse {
+
+    0% {
+        transform:
+            rotate(4deg);
+    }
+
+    50% {
+        transform:
+            translateX(6px)
+            rotate(7deg);
+    }
+
+    100% {
+        transform:
+            rotate(4deg);
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI STARTLED
+========================================================= */
+
+.seals-hoshi-ending.startled {
+    animation:
+        sealsEndingStartled
+        0.3s
+        ease-out;
+}
+
+
+@keyframes sealsEndingStartled {
+
+    0% {
+        transform:
+            scale(1)
+            rotate(4deg);
+    }
+
+    45% {
+        transform:
+            translateY(-18px)
+            scale(1.1)
+            rotate(-8deg);
+    }
+
+    100% {
+        transform:
+            scale(1)
+            rotate(4deg);
+    }
+
+}
+
+
+/* =========================================================
+   HOSHI ESCAPE
+========================================================= */
+
+.seals-hoshi-ending.escape {
+    right: -20%;
+
+    top: 44%;
+
+    opacity: 0;
+
+    transform:
+        rotate(18deg)
+        scale(0.85);
+
+    transition:
+        right 0.7s linear,
+        top 0.7s ease-in,
+        opacity 0.5s ease,
+        transform 0.7s ease;
+}
+
+
+/* =========================================================
+   MIRA STEP FORWARD
+========================================================= */
+
+.seals-speaker-mira.step-forward {
+    transform:
+        translateX(-5%)
+        scale(1.04);
+}
+
+
+/* =========================================================
+   SMALLER SCREENS
+========================================================= */
+
+@media (
+    max-width: 1000px
+) {
+
+    .seals-puzzle-panel {
+        left: 25%;
+
+        width:
+            clamp(
+                330px,
+                44vw,
+                540px
+            );
+    }
+
+
+    .seals-game-lock-1,
+    .seals-door-lock-1 {
+        left: 58%;
+    }
+
+
+    .seals-game-lock-2,
+    .seals-door-lock-2 {
+        left: 58%;
+    }
+
+
+    .seals-game-lock-3,
+    .seals-door-lock-3 {
+        left: 58%;
+    }
+
+
+    .seals-speaker {
+        width:
+            clamp(
+                180px,
+                25vw,
+                300px
+            );
+    }
+
+
+    .seals-option-btn {
+        min-height: 75px;
+    }
+
+}
+
+/* =========================
+   УВЕЛИЧИВАЕМ РУМИ И ЗОИ В СЦЕНЕ SEALS
+========================= */
+
+.seals-speaker-rumi {
+    width: clamp(320px, 40vw, 640px) !important;
+}
+
+.seals-speaker-zoey {
+    width: clamp(260px, 28vw, 480px) !important;
+}
+/* =========================================================
+   DOOR OPEN IMAGE
+========================================================= */
+
+.seals-door-open-image {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;          /* или contain, чтобы вписать */
+    transform: translate(-50%, -50%);
+    z-index: 36;               /* чуть выше фона, но ниже замков и интерфейса */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+.seals-door-open-image.show {
+    opacity: 1;
+}
