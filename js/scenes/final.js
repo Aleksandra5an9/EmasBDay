@@ -2972,7 +2972,7 @@ export function createFinalScene({
                 // ---- ЗАПУСКАЕМ ФИНАЛЬНЫЙ ТРЕК ----
                 const endBgm = new Audio(SFX.endScreenBgm);
                 endBgm.loop = false;   // или true, если хотите повторять
-                endBgm.volume = 0.5;
+                endBgm.volume = 0.9;
                 endBgm.play().catch(e => console.warn('Final BGM play blocked:', e));
 
 
