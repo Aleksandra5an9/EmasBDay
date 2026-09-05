@@ -322,7 +322,9 @@ const SFX = {
         "./assets/audio/magic_zap.mp3",
 
     collect:
-        "./assets/audio/star_collect.mp3"
+        "./assets/audio/star_collect.mp3",
+
+    endScreenBgm: "./assets/audio/end_screen_bgm.mp3"
 
 };
 
@@ -2960,6 +2962,18 @@ export function createFinalScene({
 
 
                 clearDialogue();
+
+                if (game._bgm) {
+                    game._bgm.pause();
+                    game._bgm.currentTime = 0;
+                    game._bgm = null;
+                }
+
+                // ---- ЗАПУСКАЕМ ФИНАЛЬНЫЙ ТРЕК ----
+                const endBgm = new Audio(SFX.endScreenBgm);
+                endBgm.loop = false;   // или true, если хотите повторять
+                endBgm.volume = 0.5;
+                endBgm.play().catch(e => console.warn('Final BGM play blocked:', e));
 
 
                 background.src =
