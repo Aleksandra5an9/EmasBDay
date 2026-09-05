@@ -260,10 +260,16 @@ export function createSevenStarsScene({
 
     function startSevenStarsBgm() {
         bgmAudio = new Audio(SFX.sevenStarsBgm);
-        bgmAudio.loop = false;        // трек длинный, пусть играет один раз
-        bgmAudio.volume = 0.35;       // тихо, чтобы не перекрывать голоса
+        bgmAudio.loop = false;
+        bgmAudio.volume = 0.35;
         bgmAudio.play().catch(e => console.warn('BGM play blocked:', e));
+
+        // ---- СОХРАНЯЕМ ССЫЛКУ В GAME, ЧТОБЫ ПОТОМ ОСТАНОВИТЬ ----
+        if (game) {
+            game._bgm = bgmAudio;
+        }
     }
+
 
     // Функцию остановки НЕ создаём — мы не будем останавливать музыку в этой сцене
 
