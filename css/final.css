@@ -434,13 +434,13 @@
     position: absolute;
 
     left: 56%;
-    top: 61%;
+    top: 81%;
 
     width:
         clamp(
-            135px,
+            110px,
             14vw,
-            245px
+            220px
         );
 
     z-index: 38;
@@ -800,15 +800,11 @@
 .final-portal {
     position: absolute;
 
-    left: 56%;
+    left: 50%;
     top: 36%;
 
     width:
-        clamp(
-            180px,
-            20vw,
-            350px
-        );
+        clamp(320px, 35vw, 600px);
 
     aspect-ratio: 1;
 
@@ -2040,45 +2036,17 @@
 }
 
 
-/* =========================================================
-   PARTY HAT 😂
-
-   Потом можем заменить на PNG.
-========================================================= */
-
 .final-hoshi-party-hat {
     position: absolute;
-
     left: 50%;
-    top: -9%;
-
+    top: -20%;
     z-index: 6;
-
-    font-size:
-        clamp(
-            35px,
-            4vw,
-            64px
-        );
-
-    transform:
-        translateX(-50%)
-        rotate(-18deg);
-
+    width: clamp(40px, 5vw, 80px);
+    height: auto;
+    transform: translateX(-50%) rotate(-18deg);
     transform-origin: bottom center;
-
-    filter:
-        drop-shadow(
-            0 3px 5px
-            rgba(0, 0, 0, 0.4)
-        );
-
-    animation:
-        finalPartyHatWiggle
-        1.2s
-        ease-in-out
-        infinite
-        alternate;
+    filter: drop-shadow(0 3px 5px rgba(0,0,0,0.4));
+    animation: finalPartyHatWiggle 1.2s ease-in-out infinite alternate;
 }
 
 
@@ -3334,4 +3302,26 @@
         bottom: 2%;
     }
 
+}
+
+/* Увеличиваем Зои только когда она в позе "excited" */
+#finalGiftZoey[src*="zoey_excited"],
+#finalEpiZoey[src*="zoey_excited"] {
+    width: clamp(220px, 30vw, 440px) !important;
+    max-height: 80vh !important;
+    right: -5% !important;
+}
+
+/* Увеличиваем и сдвигаем Руми только когда она в позе final */
+#finalEpiRumi[src*="rumi_final"] {
+    left: 15% !important;
+    width: clamp(320px, 35vw, 580px) !important;
+}
+
+/* Увеличиваем и поднимаем эмблему */
+img[src*="huntrix_emblem_normal"] {
+    left: 50% !important;
+    top: 15% !important;
+    width: clamp(440px, 44vw, 640px) !important;
+    opacity: 1 !important;
 }
