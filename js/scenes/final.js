@@ -67,7 +67,7 @@ const IMG = {
     emblem:
         "./assets/images/huntrix_emblem_normal.png",
 
-
+    partyHat: "./assets/images/party_hat.png",
     /* =====================================================
        RUMI
     ===================================================== */
@@ -247,9 +247,23 @@ const VOICE = {
     epilogueZoeyName:
         "./assets/audio/s12_zoey_03_name.mp3",
 
+        // ---- НОВЫЕ РЕПЛИКИ ЭПИЛОГА ----
+        epilogueRumiSchool: "./assets/audio/s12_rumi_03_school.mp3",
+        epilogueZoeyStudy: "./assets/audio/s12_zoey_04_study.mp3",
+        epilogueMiraHomework: "./assets/audio/s12_mira_03_homework.mp3",
+        epilogueZoeyRespect: "./assets/audio/s12_zoey_05_respect.mp3",
+        epilogueRumiParents: "./assets/audio/s12_rumi_04_parents.mp3",
+        epilogueMiraAdventure: "./assets/audio/s12_mira_04_adventure.mp3",
+        epilogueZoeyClass: "./assets/audio/s12_zoey_06_class.mp3",
+        epilogueRumiProud: "./assets/audio/s12_rumi_05_proud.mp3",
+        epilogueRumiBirthdayEma: "./assets/audio/s12_rumi_birthday_ema.mp3",
+        epilogueZoeyBirthdayEma: "./assets/audio/s12_zoey_birthday_ema.mp3",
+        epilogueMiraBirthdayEma: "./assets/audio/s12_mira_birthday_ema.mp3",
+
+
 
     /* =========================
-       END JOKE
+       END JOKE 
     ========================= */
 
     endMiraHoshi:
@@ -526,12 +540,6 @@ export function createFinalScene({
                         >
 
 
-                        <div
-                            class="final-portal-sparkle"
-                        >
-                            ✨
-                        </div>
-
                     </button>
 
                 </section>
@@ -716,11 +724,11 @@ export function createFinalScene({
 
                             <!-- PARTY HAT — пока CSS -->
 
-                            <div
+                            <img
                                 class="final-hoshi-party-hat"
+                                src="${IMG.partyHat}"
+                                alt=""
                             >
-                                🎉
-                            </div>
 
 
                             <!-- УКРАДЕННАЯ ЛОЖКА 😂 -->
@@ -1105,6 +1113,44 @@ export function createFinalScene({
                         )
                 );
 
+            }
+
+            /* =====================================================
+            ОДНОВРЕМЕННОЕ ВОСПРОИЗВЕДЕНИЕ ТРЁХ ГОЛОСОВ
+            ===================================================== */
+
+            async function speakThree(
+                name1, text1, path1,
+                name2, text2, path2,
+                name3, text3, path3
+            ) {
+                clearSpeaking();
+
+                // Показываем диалоговое окно с общим текстом (можно один из трёх)
+                speakerName.textContent = "РУМИ, ЗОИ, МИРА";
+                subtitle.textContent = "С днём рождения, Эма!";
+                dialogueBox.classList.add("show");
+
+                // Запускаем все три аудио одновременно
+                const volumes = {
+                    rumi: 0.82,
+                    mira: 1,
+                    zoey: 0.82
+                };
+
+                const play1 = audio.playVoice(path1, volumes[name1] ?? 0.82);
+                const play2 = audio.playVoice(path2, volumes[name2] ?? 0.82);
+                const play3 = audio.playVoice(path3, volumes[name3] ?? 0.82);
+
+                // Ждём, пока все три закончатся
+                await Promise.all([play1, play2, play3]);
+
+                // Убираем подсветку у всех троих
+                [giftRumi, giftMira, giftZoey, epiRumi, epiMira, epiZoey].forEach(
+                    character => character.classList.remove("speaking")
+                );
+
+                await wait(100);
             }
 
 
@@ -2561,7 +2607,7 @@ export function createFinalScene({
             async function birthdayCongratulations() {
 
                 /* =========================
-                   СПОКОЙНЫЕ ФИНАЛЬНЫЕ ПОЗЫ
+                СПОКОЙНЫЕ ФИНАЛЬНЫЕ ПОЗЫ
                 ========================= */
 
                 setEpiloguePose(
@@ -2569,40 +2615,31 @@ export function createFinalScene({
                     IMG.rumiFinal
                 );
 
-
                 setEpiloguePose(
                     "zoey",
                     IMG.zoeyFinal
                 );
-
 
                 setEpiloguePose(
                     "mira",
                     IMG.miraFinal
                 );
 
-
                 setEpilogueHoshiPose(
                     IMG.hoshiShy
                 );
-
 
                 epiHoshiWrap.classList.remove(
                     "innocent",
                     "hide-spoon"
                 );
 
-
                 await wait(
                     350
                 );
 
-
                 /* =================================================
-                   РУМИ
-
-                   ЭМА...
-                   С СЕМИЛЕТИЕМ ТЕБЯ ❤️
+                РУМИ: ЭМА... С СЕМИЛЕТИЕМ ТЕБЯ ❤️
                 ================================================= */
 
                 await speak(
@@ -2612,16 +2649,14 @@ export function createFinalScene({
                     VOICE.epilogueRumiSeven
                 );
 
-
                 /* =================================================
-                   ЗОИ
+                ЗОИ
                 ================================================= */
 
                 setEpiloguePose(
                     "zoey",
                     IMG.zoeyExcited
                 );
-
 
                 await speak(
                     "zoey",
@@ -2630,16 +2665,14 @@ export function createFinalScene({
                     VOICE.epilogueZoeyBirthday
                 );
 
-
                 /* =================================================
-                   МИРА
+                МИРА
                 ================================================= */
 
                 setEpiloguePose(
                     "mira",
                     IMG.miraSmile
                 );
-
 
                 await speak(
                     "mira",
@@ -2648,121 +2681,150 @@ export function createFinalScene({
                     VOICE.epilogueMiraBirthday
                 );
 
+                // ---- НОВЫЕ РЕПЛИКИ О ШКОЛЕ ----
+
+                await speak(
+                    "rumi",
+                    "РУМИ",
+                    "А ещё в этом году ты идёшь в школу.",
+                    VOICE.epilogueRumiSchool
+                );
+
+                await speak(
+                    "zoey",
+                    "ЗОИ",
+                    "Мы желаем тебе отлично учиться!",
+                    VOICE.epilogueZoeyStudy
+                );
+
+                await speak(
+                    "mira",
+                    "МИРА",
+                    "Не забывать делать домашние задания...",
+                    VOICE.epilogueMiraHomework
+                );
+
+                await speak(
+                    "zoey",
+                    "ЗОИ",
+                    "Слушаться учителей и уважать их.",
+                    VOICE.epilogueZoeyRespect
+                );
+
+                await speak(
+                    "rumi",
+                    "РУМИ",
+                    "И, конечно, слушаться маму и папу.",
+                    VOICE.epilogueRumiParents
+                );
+
+                await speak(
+                    "mira",
+                    "МИРА",
+                    "И не забывать, что школа — это не только уроки, но и новые друзья, открытия и приключения!",
+                    VOICE.epilogueMiraAdventure
+                );
+
+                await speak(
+                    "zoey",
+                    "ЗОИ",
+                    "Так что пусть твой первый школьный год будет классным!",
+                    VOICE.epilogueZoeyClass
+                );
+
+                await speak(
+                    "rumi",
+                    "РУМИ",
+                    "Мы очень тобой гордимся.",
+                    VOICE.epilogueRumiProud
+                );
+
+                await wait( 500 );
+
+                // ---- ВСЕ ТРОЕ ГОВОРЯТ ОДНОВРЕМЕННО ----
+                await speakThree(
+                    "rumi", "РУМИ", "С днём рождения, Эма!", VOICE.epilogueRumiBirthdayEma,
+                    "zoey", "ЗОИ", "С днём рождения, Эма!", VOICE.epilogueZoeyBirthdayEma,
+                    "mira", "МИРА", "С днём рождения, Эма!", VOICE.epilogueMiraBirthdayEma
+                );
+
+                // ---- КОНЕЦ НОВЫХ РЕПЛИК ----
 
                 clearDialogue();
-
-
-                /*
-                    Небольшая пауза.
-
-                    Кажется, поздравление закончилось...
-                */
 
                 await wait(
                     900
                 );
 
-
                 /* =================================================
-                   ХОШИ ЧТО-ТО ХОЧЕТ СКАЗАТЬ
+                ХОШИ ЧТО-ТО ХОЧЕТ СКАЗАТЬ
                 ================================================= */
 
                 epiHoshiWrap.classList.add(
                     "trying-to-speak"
                 );
 
-
                 setEpilogueHoshiPose(
                     IMG.hoshiShy
                 );
-
 
                 await wait(
                     500
                 );
 
-
                 /* =================================================
-                   ЕДИНСТВЕННОЕ НАСТОЯЩЕЕ
-                   СЛОВО ХОШИ ЗА ВСЮ ИГРУ ❤️
+                ЕДИНСТВЕННОЕ СЛОВО ХОШИ ❤️
                 ================================================= */
 
-                speakerName.textContent =
-                    "ХОШИ";
+                speakerName.textContent = "ХОШИ";
+                subtitle.textContent = "Э... ма!";
+                dialogueBox.classList.add("show");
 
-
-                subtitle.textContent =
-                    "Э... ма!";
-
-
-                dialogueBox.classList.add(
-                    "show"
-                );
-
-
-                epiHoshiWrap.classList.add(
-                    "speaking"
-                );
-
+                epiHoshiWrap.classList.add("speaking");
 
                 await audio.playVoice(
                     HOSHI_SOUND.ema,
                     0.8
                 );
 
-
                 epiHoshiWrap.classList.remove(
                     "speaking",
                     "trying-to-speak"
                 );
 
-
-                await wait(
-                    350
-                );
-
+                await wait(350);
 
                 /* =================================================
-                   ВСЕ:
-
-                   😳
+                ВСЕ: 😳
                 ================================================= */
 
                 epilogueCharacters.classList.add(
                     "hoshi-spoke-reaction"
                 );
 
-
                 setEpiloguePose(
                     "rumi",
                     IMG.rumiExcited
                 );
-
 
                 setEpiloguePose(
                     "zoey",
                     IMG.zoeyEmotional
                 );
 
-
                 setEpiloguePose(
                     "mira",
                     IMG.miraSmile
                 );
 
-
                 setEpilogueHoshiPose(
                     IMG.hoshiShocked
                 );
 
-
-                await wait(
-                    650
-                );
-
+                await wait(650);
 
                 /* =================================================
-                   ЗОИ 🥹
+                ЗОИ 🥹
                 ================================================= */
 
                 await speak(
@@ -2772,81 +2834,33 @@ export function createFinalScene({
                     VOICE.epilogueZoeyName
                 );
 
-
                 clearDialogue();
 
-
                 /* =================================================
-                   ХОШИ САМ ПОНЯЛ,
-                   ЧТО СДЕЛАЛ 😳
+                ХОШИ САМ ПОНЯЛ
                 ================================================= */
 
-                setEpilogueHoshiPose(
-                    IMG.hoshiHiding
-                );
+                setEpilogueHoshiPose(IMG.hoshiHiding);
+                epiHoshiWrap.classList.add("embarrassed");
+                await wait(500);
 
-
-                epiHoshiWrap.classList.add(
-                    "embarrassed"
-                );
-
-
-                await wait(
-                    500
-                );
-
+                epiHoshiWrap.classList.add("hide-behind-rumi");
+                await wait(750);
 
                 /* =================================================
-                   ПРЯЧЕТСЯ ЗА РУМИ 😂❤️
+                КАРТИНКА ЭМЫ + HUNTR/X
                 ================================================= */
 
-                epiHoshiWrap.classList.add(
-                    "hide-behind-rumi"
-                );
-
-
-                await wait(
-                    750
-                );
-
+                emaGroup.classList.add("show");
+                audio.playSfx(SFX.sparkle, 0.7);
+                await wait(1300);
 
                 /* =================================================
-                   ПОЯВЛЯЕТСЯ СОБРАННАЯ
-                   КАРТИНКА:
-
-                   ЭМА + HUNTR/X
+                ПЕРЕХОД К ФИНАЛЬНОМУ ЭКРАНУ
                 ================================================= */
 
-                emaGroup.classList.add(
-                    "show"
-                );
-
-
-                audio.playSfx(
-                    SFX.sparkle,
-                    0.7
-                );
-
-
-                await wait(
-                    1300
-                );
-
-
-                /* =================================================
-                   ПЕРЕХОД НА ПОСЛЕДНИЙ ЭКРАН
-                ================================================= */
-
-                epiloguePhase.classList.add(
-                    "to-end"
-                );
-
-
-                await wait(
-                    850
-                );
-
-
+                epiloguePhase.classList.add("to-end");
+                await wait(850);
                 await showEndScreen();
 
             }
