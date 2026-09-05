@@ -107,7 +107,7 @@
 
 .seven-mira {
     left: 2%;
-
+    bottom: 2%;
     width:
         clamp(
             205px,
@@ -127,7 +127,7 @@
 
 .seven-rumi {
     left: 21%;
-
+    bottom: 2%;
     width:
         clamp(
             220px,
@@ -147,13 +147,8 @@
 
 .seven-zoey {
     right: 1%;
-
-    width:
-        clamp(
-            205px,
-            19vw,
-            340px
-        );
+    bottom: 2%;
+    width: clamp(280px, 28vw, 480px) !important;
 
     max-height: 76vh;
 
@@ -170,7 +165,7 @@
 .seven-hoshi {
     position: absolute;
 
-    left: 68%;
+    left: 65%;
     bottom: 4%;
 
     width:
@@ -713,77 +708,26 @@
    семью настоящими звёздами.
 ========================================================= */
 
-.seven-number {
-    position: absolute;
 
-    left: 51%;
-    top: 47%;
-
-    width:
-        clamp(
-            250px,
-            30vw,
-            500px
-        );
-
-    height:
-        clamp(
-            330px,
-            47vh,
-            600px
-        );
-
-    z-index: 44;
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transform:
-        translate(
-            -50%,
-            -50%
-        )
-        scale(0.82);
-
-    clip-path:
-        polygon(
-            7% 4%,
-            94% 4%,
-            94% 17%,
-            66% 42%,
-            56% 59%,
-            48% 77%,
-            42% 100%,
-            21% 100%,
-            30% 71%,
-            40% 49%,
-            55% 25%,
-            7% 25%
-        );
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(255, 250, 197, 0.42),
-            rgba(255, 211, 86, 0.24),
-            rgba(187, 117, 255, 0.16)
-        );
-
-    filter:
-        blur(22px);
-
-    transition:
-        opacity 0.8s ease,
-        transform 0.8s ease,
-        filter 0.8s ease;
-}
 
 
 .seven-number.forming {
     opacity: 0.16;
 }
 
+.seven-number {
+    position: absolute;
+    left: 51%;
+    top: 47%;
+    width: clamp(250px, 30vw, 500px);
+    height: clamp(330px, 47vh, 600px);
+    z-index: 44;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.82);
+    object-fit: contain;
+    transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+}
 
 .seven-number.complete {
     opacity: 0.72;
@@ -795,13 +739,6 @@
         )
         scale(1);
 
-    filter:
-        blur(18px)
-
-        drop-shadow(
-            0 0 28px
-            rgba(255, 222, 101, 0.7)
-        );
 }
 
 
@@ -814,13 +751,6 @@
         brightness(0.88);
 }
 
-
-.seven-stars-stage.watch-stars
-.seven-character {
-    transform:
-        translateY(2px)
-        scale(0.99);
-}
 
 
 /* =========================================================
@@ -895,7 +825,7 @@
 .seven-flying-layer.seven-finished {
     transform:
         translate(
-            -18%,
+            -8%,
             -7%
         )
         scale(0.72);
@@ -920,214 +850,10 @@
 }
 
 
-/* =========================================================
-   EMBLEM
-========================================================= */
-
-.seven-emblem-wrap {
-    position: absolute;
-
-    left: 67%;
-    top: 39%;
-
-    width:
-        clamp(
-            145px,
-            15vw,
-            260px
-        );
-
-    aspect-ratio: 1;
-
-    z-index: 60;
-
-    opacity: 0;
-
-    pointer-events: none;
-
-    transform:
-        translate(
-            -50%,
-            -50%
-        )
-        scale(0.35)
-        rotate(-10deg);
-
-    transition:
-        opacity 0.55s ease,
-        transform 0.75s cubic-bezier(
-            0.16,
-            1,
-            0.3,
-            1
-        ),
-        filter 0.5s ease;
-}
 
 
-.seven-emblem-wrap.show {
-    opacity: 1;
-
-    transform:
-        translate(
-            -50%,
-            -50%
-        )
-        scale(1)
-        rotate(0deg);
-}
 
 
-/* =========================================================
-   EMBLEM IMAGE
-========================================================= */
-
-.seven-emblem {
-    position: relative;
-
-    display: block;
-
-    width: 100%;
-    height: 100%;
-
-    z-index: 3;
-
-    object-fit: contain;
-
-    filter:
-        drop-shadow(
-            0 7px 12px
-            rgba(0, 0, 0, 0.4)
-        );
-
-    transition:
-        filter 0.6s ease,
-        transform 0.6s ease;
-}
-
-
-/* =========================================================
-   EMBLEM LIGHT
-========================================================= */
-
-.seven-emblem-light {
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    width: 165%;
-    height: 165%;
-
-    z-index: 1;
-
-    transform:
-        translate(
-            -50%,
-            -50%
-        );
-
-    border-radius: 50%;
-
-    opacity: 0.45;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(255, 255, 226, 0.68) 0%,
-            rgba(226, 178, 255, 0.34) 28%,
-            rgba(136, 102, 255, 0.14) 53%,
-            rgba(88, 64, 180, 0) 73%
-        );
-
-    filter:
-        blur(9px);
-
-    transition:
-        opacity 0.5s ease,
-        transform 0.6s ease;
-}
-
-
-/* =========================================================
-   EMBLEM CHARGED
-========================================================= */
-
-.seven-emblem-wrap.charged
-.seven-emblem-light {
-    opacity: 0.92;
-
-    transform:
-        translate(
-            -50%,
-            -50%
-        )
-        scale(1.2);
-
-    animation:
-        sevenEmblemLightPulse
-        0.9s
-        ease-in-out
-        infinite
-        alternate;
-}
-
-
-@keyframes sevenEmblemLightPulse {
-
-    from {
-        scale: 0.94;
-    }
-
-    to {
-        scale: 1.07;
-    }
-
-}
-
-
-.seven-emblem.glow {
-    filter:
-        brightness(1.16)
-
-        drop-shadow(
-            0 0 9px
-            rgba(255, 255, 255, 0.92)
-        )
-
-        drop-shadow(
-            0 0 21px
-            rgba(217, 170, 255, 0.82)
-        )
-
-        drop-shadow(
-            0 0 42px
-            rgba(150, 106, 255, 0.55)
-        );
-}
-
-
-/* =========================================================
-   MAGIC LINK
-========================================================= */
-
-.seven-emblem-wrap.magic-linked {
-    filter:
-        brightness(1.12);
-}
-
-
-.seven-number.magic-linked {
-    opacity: 0.72;
-
-    filter:
-        blur(17px)
-
-        drop-shadow(
-            0 0 30px
-            rgba(255, 231, 123, 0.85)
-        );
-}
 
 
 /* =========================================================
@@ -1308,7 +1034,7 @@
 /* Начинает подкрадываться */
 
 .seven-hoshi.gift-sneak {
-    left: 64%;
+    left: 60%;
 
     bottom: 5%;
 
@@ -1694,4 +1420,11 @@
         bottom: 2%;
     }
 
+}
+/* Увеличиваем Руми только для нейтральной позы (rumi_neutral) */
+#sevenRumi[src*="rumi_neutral"] {
+    width: clamp(200px, 28vw, 280px) !important;
+    transform: scale(1.1) !important;
+    object-fit: contain !important;
+    object-position: center bottom !important;
 }
