@@ -222,7 +222,9 @@ const SFX = {
         "./assets/audio/magic_burst.mp3",
 
     magic:
-        "./assets/audio/magic_zap.mp3"
+        "./assets/audio/magic_zap.mp3",
+        
+    sevenStarsBgm: "./assets/audio/seven_stars_bgm.mp3"
 
 };
 
@@ -253,6 +255,17 @@ export function createSevenStarsScene({
     game,
     audio
 }) {
+
+    let bgmAudio = null;
+
+    function startSevenStarsBgm() {
+        bgmAudio = new Audio(SFX.sevenStarsBgm);
+        bgmAudio.loop = false;        // трек длинный, пусть играет один раз
+        bgmAudio.volume = 0.35;       // тихо, чтобы не перекрывать голоса
+        bgmAudio.play().catch(e => console.warn('BGM play blocked:', e));
+    }
+
+    // Функцию остановки НЕ создаём — мы не будем останавливать музыку в этой сцене
 
     return {
 
@@ -430,10 +443,12 @@ export function createSevenStarsScene({
                      сами образуют форму семёрки.
                 ============================================== -->
 
-                <div
+                <img
                     class="seven-number"
                     id="sevenNumber"
-                ></div>
+                    src="./assets/images/seven_glow.jpg"
+                    alt=""
+                >
 
 
                 <!-- =============================================
@@ -494,10 +509,30 @@ export function createSevenStarsScene({
 
             `;
 
+            root.appendChild(screen);
 
-            root.appendChild(
-                screen
-            );
+            // ---- ЗАПУСКАЕМ ФОНОВУЮ МУЗЫКУ ----
+            function tryPlayBgm() {
+                if (!bgmAudio) {
+                    startSevenStarsBgm();
+                    return;
+                }
+                // Если аудио уже существует, но стоит на паузе – пробуем возобновить
+                if (bgmAudio.paused) {
+                    bgmAudio.play().catch(() => {});
+                }
+            }
+
+            // Первая попытка – может сработать, если браузер разрешает
+            tryPlayBgm();
+
+            // Если музыка не заиграла – запускаем при первом клике по сцене
+            screen.addEventListener('click', function onFirstClick() {
+                tryPlayBgm();
+                screen.removeEventListener('click', onFirstClick);
+            }, { once: true });
+        
+            
 
 
             /* =====================================================
@@ -580,6 +615,14 @@ export function createSevenStarsScene({
                 screen.querySelector(
                     "#sevenEmblem"
                 );
+
+            // ---- Заменяем эмблему на раскрашенную, если она есть ----
+            const coloredEmblem = game.getColoredEmblem();
+            if (coloredEmblem) {
+                emblem.src = coloredEmblem;
+            } else {
+                emblem.src = IMG.emblem; // fallback
+            }
 
 
             const finalLight =
@@ -1176,165 +1219,47 @@ export function createSevenStarsScene({
                STAR ORBIT
             ===================================================== */
 
-            async function orbitStars() {
+             async function orbitStars() {
 
-                /*
-                    Каждой звезде задаём
-                    свою точку вокруг центра.
+                const numStars = flyingStars.length;
+                // Центр круга (в процентах от размера сцены)
+                const centerX = 50;   // можно изменить под свой фон
+                const centerY = 45;   // можно изменить под свой фон
+                const radius = 25;    // радиус круга в процентах
 
-                    CSS плавно отправит их туда.
-                */
+                flyingStars.forEach((star, index) => {
+                    // Равномерно распределяем 7 звёзд по окружности
+                    const angle = (index / numStars) * 2 * Math.PI;
+                    const left = centerX + radius * Math.cos(angle);
+                    const top  = centerY + radius * Math.sin(angle);
 
-                const orbitPoints = [
+                    star.style.setProperty("--orbit-left", `${left}%`);
+                    star.style.setProperty("--orbit-top", `${top}%`);
+                    star.style.setProperty("--orbit-delay", `${index * 0.06}s`);
 
-                    {
-                        left: 28,
-                        top: 28
-                    },
+                    star.classList.remove("launch");
+                    star.classList.add("orbit");
+                });
 
-                    {
-                        left: 41,
-                        top: 18
-                    },
+                audio.playSfx(SFX.sparkle, 0.65);
 
-                    {
-                        left: 57,
-                        top: 20
-                    },
+                // Хоши и девочки смотрят вверх
+                setHoshiPose(IMG.hoshiWonder);
+                hoshi.classList.add("watch-stars");
+                playHoshiSound(HOSHI_SOUND.wonder, 0.45);
+                stage.classList.add("watch-stars");
 
-                    {
-                        left: 71,
-                        top: 31
-                    },
+                await wait(1900);
 
-                    {
-                        left: 68,
-                        top: 51
-                    },
+                // Вращаем весь слой – звёзды будут двигаться по кругу
+                flyingLayer.classList.add("spin");
+                await wait(1600);
+                flyingLayer.classList.remove("spin");
 
-                    {
-                        left: 51,
-                        top: 61
-                    },
-
-                    {
-                        left: 32,
-                        top: 52
-                    }
-
-                ];
-
-
-                flyingStars.forEach(
-                    (star, index) => {
-
-                        const point =
-                            orbitPoints[
-                                index
-                            ];
-
-
-                        star.style.setProperty(
-                            "--orbit-left",
-                            `${point.left}%`
-                        );
-
-
-                        star.style.setProperty(
-                            "--orbit-top",
-                            `${point.top}%`
-                        );
-
-
-                        star.style.setProperty(
-                            "--orbit-delay",
-                            `${index * 0.06}s`
-                        );
-
-
-                        star.classList.remove(
-                            "launch"
-                        );
-
-
-                        star.classList.add(
-                            "orbit"
-                        );
-
-                    }
-                );
-
-
-                audio.playSfx(
-                    SFX.sparkle,
-                    0.65
-                );
-
-
-                /* =========================
-                   ХОШИ В ВОСТОРГЕ
-                ========================= */
-
-                setHoshiPose(
-                    IMG.hoshiWonder
-                );
-
-
-                hoshi.classList.add(
-                    "watch-stars"
-                );
-
-
-                playHoshiSound(
-                    HOSHI_SOUND.wonder,
-                    0.45
-                );
-
-
-                /* =========================
-                   ДЕВОЧКИ СМОТРЯТ ВВЕРХ
-                ========================= */
-
-                stage.classList.add(
-                    "watch-stars"
-                );
-
-
-                await wait(
-                    1900
-                );
-
-
-                /*
-                    Ещё один круг.
-
-                    Не слишком долго —
-                    иначе сцена начнёт
-                    затягиваться.
-                */
-
-                flyingLayer.classList.add(
-                    "spin"
-                );
-
-
-                await wait(
-                    1600
-                );
-
-
-                flyingLayer.classList.remove(
-                    "spin"
-                );
-
-
-                /* =================================================
-                   СОБИРАЕМ СЕМЁРКУ
-                ================================================= */
-
+                // Затем собираем семёрку
                 await formNumberSeven();
-
             }
+
 
 
             /* =====================================================
@@ -1360,41 +1285,41 @@ export function createSevenStarsScene({
                     /* верхняя линия */
 
                     {
-                        left: 39,
-                        top: 27
+                        left: 46,
+                        top: 34
                     },
 
                     {
-                        left: 47,
-                        top: 27
+                        left: 51,
+                        top: 34
                     },
 
                     {
                         left: 55,
-                        top: 27
+                        top: 34
                     },
 
                     {
-                        left: 63,
-                        top: 27
+                        left: 54,
+                        top: 41
                     },
 
 
                     /* диагональ */
 
                     {
-                        left: 59,
-                        top: 39
+                        left: 53,
+                        top: 48
                     },
 
                     {
-                        left: 54,
-                        top: 52
+                        left: 52,
+                        top: 55
                     },
 
                     {
-                        left: 49,
-                        top: 66
+                        left: 50,
+                        top: 62
                     }
 
                 ];
