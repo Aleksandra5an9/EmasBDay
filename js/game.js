@@ -8,6 +8,9 @@ export class Game {
         this.state = {
             starsCollected: 0
         };
+
+        // ---- Хранилище для раскрашенной эмблемы ----
+        this.coloredEmblem = null;
     }
 
     start() {
@@ -63,5 +66,21 @@ export class Game {
 
     setStarsCollected(count) {
         this.state.starsCollected = count;
+    }
+
+    // ---- Методы для работы с раскрашенной эмблемой ----
+
+    /**
+     * Сохраняет раскрашенную эмблему (DataURL)
+     */
+    setColoredEmblem(dataUrl) {
+        this.coloredEmblem = dataUrl;
+    }
+
+    /**
+     * Возвращает сохранённую раскрашенную эмблему (DataURL или null)
+     */
+    getColoredEmblem() {
+        return this.coloredEmblem;
     }
 }
